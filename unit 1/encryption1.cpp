@@ -5,8 +5,6 @@
 #include <ctype.h>
 using namespace std;
 
-char encrypt (char plaintext, char cipher);
-
 int main() {
 
     //initialization
@@ -14,7 +12,7 @@ int main() {
     char cipher[7], plaintext[61], ciphertext[61];
     ifstream inFile;
 
-    //open cipher file
+    //open file
     inFile.open ("message.txt");
     if (inFile.is_open())
         cout << "file has been opened\n";
@@ -27,25 +25,26 @@ int main() {
     inFile.getline (plaintext, 61);
     cout << plaintext << endl;
 
+    //cleanup
+    inFile.close(), inFile.clear();
+
     //close file
     inFile.close(), inFile.clear();
 
     //converts message to ciphertext, ignoring non-alpha characters
-    for (i = 0; i < 13; i++)
-		if (plaintext[i] > 'A' && plaintext[i] < 'Z'){
-    		ciphertext[n] = encrypt (plaintext[n], cipher[n % strlen(cipher)] );
-    		cout << ciphertext[n];
+    while (plaintext[i]){
+		if (isupper (plaintext[i])){
+    		ciphertext[n] = (plaintext[i] + cipher[n % strlen(cipher)] - 'A') % 'Z';
+    		cout << char ((plaintext[i] + cipher[n % strlen(cipher)] - 'A') % 'Z');
 		    n++;
 		}
+		i++;
+    }
+
+    ciphertext[n] = '\0';
 
     cout << "\n\nCiphertext: " << ciphertext << endl;
 
     system("pause");
     return 0;
-}
-
-char encrypt (char plaintext, char cipher){
-
-	char ciphertext = plaintext + (cipher - 'A');
-	cout << "encrypted " << plaintext << " into " << ciphertext << endl;
 }
