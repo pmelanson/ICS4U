@@ -9,39 +9,32 @@ char encrypt (char plaintext, char cipher);
 
 int main() {
 
-	int i = 0, n = 0;
-	char cipher[7] = "", plaintext[61] = "", ciphertext[61] = "";
-	ifstream inFile;
-
     //initialization
     int i = 0, n = 0;
     char cipher[7], plaintext[61], ciphertext[61];
     ifstream inFile;
 
     //open cipher file
-    inFile.open ("cipher.txt");
-    if (inFile.is_open())
-        cout << "cipher file has been opened\n";
-
-    //read cipher file
-    inFile.getline (cipher, 7);
-    cout << cipher << endl;
-    inFile.close(), inFile.clear();
-
-    //open plaintext file
     inFile.open ("message.txt");
     if (inFile.is_open())
-        cout << "message file has been opened\n";
+        cout << "file has been opened\n";
 
-    //read plaintext file
+    //read cipher
+    inFile.getline (cipher, 7);
+    cout << cipher << endl;
+
+    //read plaintext
     inFile.getline (plaintext, 61);
     cout << plaintext << endl;
+
+    //close file
     inFile.close(), inFile.clear();
 
     //converts message to ciphertext, ignoring non-alpha characters
-    for (i = 0; i < strlen(plaintext); i++)
-		if (isalpha (plaintext[i])){
+    for (i = 0; i < 13; i++)
+		if (plaintext[i] > 'A' && plaintext[i] < 'Z'){
     		ciphertext[n] = encrypt (plaintext[n], cipher[n % strlen(cipher)] );
+    		cout << ciphertext[n];
 		    n++;
 		}
 
@@ -53,12 +46,6 @@ int main() {
 
 char encrypt (char plaintext, char cipher){
 
-	 if (plaintext + (cipher - 'A') > 'Z'){
-	 	char ciphertext = plaintext + (cipher - 'Z' - 1);
-		 cout << "wrapped " << plaintext << " into " << ciphertext << endl;
-		}
-     else{
- 	    char ciphertext = plaintext + (cipher - 'A');
-		 cout << "encrypted " << plaintext << " into " << ciphertext << endl;
-		}
+	char ciphertext = plaintext + (cipher - 'A');
+	cout << "encrypted " << plaintext << " into " << ciphertext << endl;
 }
