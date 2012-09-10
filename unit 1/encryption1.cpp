@@ -5,8 +5,6 @@
 #include <ctype.h>
 using namespace std;
 
-char encrypt (char plaintext, char cipher);
-
 int main() {
 
     //initialization
@@ -14,48 +12,37 @@ int main() {
     char cipher[7], plaintext[61], ciphertext[61];
     ifstream inFile;
 
-    //open cipher file
-    inFile.open ("cipher.txt");
-    if (inFile.is_open())
-        cout << "cipher file has been opened\n";
-
-    //read cipher file
-    inFile.getline (cipher, 7);
-    cout << cipher << endl;
-    inFile.close(), inFile.clear();
-
-    //open plaintext file
+    //open cipher
     inFile.open ("message.txt");
     if (inFile.is_open())
-        cout << "message file has been opened\n";
+        cout << "file has been opened\n";
 
-    //read plaintext file
+    //read cipher
+    inFile.getline (cipher, 7);
+    cout << cipher << endl;
+
+    //read plaintext
     inFile.getline (plaintext, 61);
     cout << plaintext << endl;
+
+    //cleanup
     inFile.close(), inFile.clear();
 
 
     //converts message to ciphertext, ignoring non-alpha characters
-    for (i = 0; i < strlen(plaintext); i++)
-		if (isalpha (plaintext[i])){
-    		ciphertext[n] = encrypt (plaintext[n], cipher[n % strlen(cipher)] );
+    while (plaintext[i]){
+		if (isupper (plaintext[i])){
+    		ciphertext[n] = (plaintext[i] + cipher[n % strlen(cipher)] - 'A') % 'Z';
+    		cout << char ((plaintext[i] + cipher[n % strlen(cipher)] - 'A') % 'Z');
 		    n++;
 		}
+		i++;
+    }
+
+    ciphertext[n] = '\0';
 
     cout << "\n\nCiphertext: " << ciphertext << endl;
 
     system("pause");
     return 0;
-}
-
-char encrypt (char plaintext, char cipher){
-
-	 if (plaintext + (cipher - 'A') > 'Z'){
-	 	char ciphertext = plaintext + (cipher - 'Z' - 1);
-		 cout << "wrapped " << plaintext << " into " << ciphertext << endl;
-		}
-     else{
- 	    char ciphertext = plaintext + (cipher - 'A');
-		 cout << "encrypted " << plaintext << " into " << ciphertext << endl;
-		}
 }
