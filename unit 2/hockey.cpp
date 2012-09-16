@@ -2,56 +2,114 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include <string>
 using namespace std;
+
+enum month_t {JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC};
 
 class player_t {
 
 	string name;
 	struct height_t {
-		unsigned feet;
+		unsigned short feet;
 		unsigned short inches;
+
+		height_t (unsigned short _feet, unsigned short _inches) :	//constructor
+			feet (_feet), inches (_inches)
+		{}
 	} height;
 	unsigned short weight;	//in pounds
 	struct birthday_t {
 		unsigned short day;
-		enum month_t {JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC} month;
+		month_t month;
 		unsigned year;
+
+		birthday_t (unsigned short _day, month_t _month, unsigned _year) :
+			day (_day), month (_month), year (_year)
+		{}
 	} birthday;
 
-	public:
+public:
 
-	string getName(), height_t getHeight(), unsigned short getWeight(), birthday_t getBirthday();
+	//return functions, to keep everything in the right scope
+	string getName() {
+		return name;
+	}
+	string getHeight() {
+		string heightString;
+		stringstream heightStream (heightString);
+		heightStream << height.feet << "' " << height.inches << '"';
+//		return string (height.feet + "' " + height.inches + '"');
+		return heightStream.str();
+	}
+	unsigned short getWeight() {
+		return weight;
+	}
+	string getBirthday() {
+		string birthdayString;
+		stringstream birthStream (birthdayString);
+		birthStream << birthday.day << '/' << birthday.month << '/' << birthday.year;
+		return birthStream.str();
+	}
 
-	player_t (string _name, height_t _height, unsigned short _weight, birthday_t _birthday) :	//constructor
-		 {name (_name), height (_height), weight (_weight), birthday (_birthday)
+	player_t (string _name, unsigned short _feet, unsigned short _inches, unsigned short _weight, unsigned short _day, month_t _month, unsigned _year) :	//constructor
+		name (_name), height (_feet, _inches), weight (_weight), birthday (_day, _month, _year) {
+		cout << "Constructed ";
+		cout << name;
+		cout << ", " << getHeight();
+		cout << " and " << getWeight() << " lbs";
+		cout << ", born " << getBirthday();
+		cout << endl;
 	}
 };
 
 vector <player_t> team;
 
-bool parseLine (istream &stream, vector <player_t> &team) {
+bool parseLine (istream &stream, vector <player_t> &group) {
 
-	string line;
+	string buffer;
+	if (getline (stream, buffer)) {	//reads line
+		istringstream line (buffer);	//turns the entire line into a stream
 
-	if (getline (stream, line)) {	//reads line
-		istringstream iss (line);
+		string name;
+		unsigned short feet, inches;
+		unsigned short day, monthBuff;
+		month_t month;
+		unsigned year;
+		unsigned short weight;
 
-		if (iss.getline (string name, 64, ','));	//reads name until the next comma
+		if (getline (line, name, ','));	//reads name until the next comma
 		else
 			return false;
 
-		if (iss.getline (string name, 64, ','));	//reads name until the next comma
-		else
+		string readHeight;
+		if (getline (line, readHeight, ',')) {	//reads height until the next comma (in ft'in" format)
+			istringstream heightStream (readHeight);
+			heightStream >> feet;
+			heightStream.ignore (1, '\'');
+			heightStream >> inches;
+		} else
 			return false;
 
-				if (iss.getline (string name, 64, ','));	//reads name until the next comma
-		else
+		string readWeight;
+		if (getline (line, readWeight, ',')) {	//reads weight until the next comma
+			istringstream weightStream (readWeight);
+			weightStream >> weight;
+		} else
 			return false;
 
-		if (iss.getline (string name, 64, ','));	//reads name until the next comma
-		else
+		string readDate;
+		if (getline (line, readDate, ',')) {	//reads birthday, end of line
+			istringstream dateStream (readDate);
+			dateStream >> day;
+			dateStream.ignore (1, '/');
+			dateStream >> monthBuff;
+			month = (month_t)monthBuff;	//I just typecast to avoid defining >> for month_t
+			dateStream.ignore (1, '/');
+			dateStream >> year;
+		} else
 			return false;
+
+		team.push_back (new player_t (name, feet, inches, weight, day, month, year));
 
 	} else
 		return false;
@@ -59,15 +117,25 @@ bool parseLine (istream &stream, vector <player_t> &team) {
 	return true;
 }
 
+bool setup() {
+
+	ifstream file ("datafile.csv");
+
+	while (parseLine (file, team));
+//	while (parseLine (cin, team));
+}
+
 int main() {
 
-	parse();
-	average();
-	sort();
+	if (setup()) {
+
+//		calculate();
+//		sort();
+//		display();
+	}
 
 
 
 
-	system("pause");
 	return 0;
 }
