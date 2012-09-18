@@ -4,78 +4,67 @@
 #include <vector>
 using namespace std;
 
-enum month_t {JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC};
+struct team_t {
 
-class player_t {
+	string name;	//team name
+	unsigned short height;	//average
+	unsigned short weight;	//also average
+	unsigned short age;	//again, average
+};
+
+struct player_t {
 
 	string name;
-	struct height_t {
-		unsigned short feet;
-		unsigned short inches;
-
-		height_t (unsigned short _feet, unsigned short _inches) :	//constructor
-			feet (_feet), inches (_inches)
-		{}
-	} height;
+	unsigned short height;	//in inches
 	unsigned short weight;	//in pounds
 	struct birthday_t {
 		unsigned short day;
-		month_t month;
+		unsigned short month;
 		unsigned year;
 
-		birthday_t (unsigned short _day, month_t _month, unsigned _year) :
+		void printBirthday() {
+			cout << day << '/' << month << '/' << year;
+		}
+
+		birthday_t (unsigned short _day, unsigned short _month, unsigned _year) :
 			day (_day), month (_month), year (_year)
 		{}
 	} birthday;
+	unsigned short age;
 
-public:
 
-	//return functions, to keep everything in the right scope
-	string getName() {
-		return name;
-	}
-	string getHeight() {
-		string heightString;
-		stringstream heightStream (heightString);
-		heightStream << height.feet << "' " << height.inches << '"';
-//		return string (height.feet + "' " + height.inches + '"');
-		return heightStream.str();
-	}
-	unsigned short getWeight() {
-		return weight;
-	}
-	string getBirthday() {
-		string birthdayString;
-		stringstream birthStream (birthdayString);
-		birthStream << birthday.day << '/' << birthday.month << '/' << birthday.year;
-		return birthStream.str();
-	}
 
-	player_t (string _name, unsigned short _feet, unsigned short _inches, unsigned short _weight, unsigned short _day, month_t _month, unsigned _year) :	//constructor
-		name (_name), height (_feet, _inches), weight (_weight), birthday (_day, _month, _year) {
-		cout << "Constructed ";
+	player_t (string _name, unsigned short _height, unsigned short _weight, unsigned short _day, unsigned short _month, unsigned _year, unsigned short _age) :	//constructor
+		name (_name), height (_height), weight (_weight), birthday (_day, _month, _year), age (_age) {
 		cout << name;
-		cout << ", " << getHeight();
-		cout << " and " << getWeight() << " lbs";
-		cout << ", born " << getBirthday();
+		if (name.length() > 15)
+			cout << "\t" << height;
+		else
+			cout << "\t\t" << height;
+		cout << "\t\t" << weight;
+		cout << "\t\t", birthday.printBirthday();
 		cout << endl;
 	}
+
+//	~player_t : {
+//		cout << "WHAT DID I DO WRONG WHY ARE YOU DELETING ME\n";
+//	}
 };
 
-vector <player_t> team;
+vector <player_t*> roster;
 
-bool parseLine (istream &stream, vector <player_t> &group) {
+bool parseLine (istream &stream) {
 
 	string buffer;
-	if (getline (stream, buffer)) {	//reads line
+	if (getline (stream, buffer)) {	//reads line into buffer
 		istringstream line (buffer);	//turns the entire line into a stream
 
-		string name;
+		string name;	//declarations
 		unsigned short feet, inches;
-		unsigned short day, monthBuff;
-		month_t month;
+		unsigned short day, month;
 		unsigned year;
 		unsigned short weight;
+		unsigned short age;
 
 		if (getline (line, name, ','));	//reads name until the next comma
 		else
@@ -84,6 +73,7 @@ bool parseLine (istream &stream, vector <player_t> &group) {
 		string readHeight;
 		if (getline (line, readHeight, ',')) {	//reads height until the next comma (in ft'in" format)
 			istringstream heightStream (readHeight);
+			heightStream.ignore (1, '"');
 			heightStream >> feet;
 			heightStream.ignore (1, '\'');
 			heightStream >> inches;
@@ -102,14 +92,20 @@ bool parseLine (istream &stream, vector <player_t> &group) {
 			istringstream dateStream (readDate);
 			dateStream >> day;
 			dateStream.ignore (1, '/');
-			dateStream >> monthBuff;
-			month = (month_t)monthBuff;	//I just typecast to avoid defining >> for month_t
+			dateStream >> month;
 			dateStream.ignore (1, '/');
 			dateStream >> year;
 		} else
 			return false;
 
-		team.push_back (new player_t (name, feet, inches, weight, day, month, year));
+		string readAge;
+		if (getline (line, readAge, ',')) {	//reads birthday, end of line
+			istringstream ageStream (readAge);
+			ageStream >> age;
+		} else
+			return false;
+
+		roster.push_back (new player_t (name, (12 * feet) + inches, weight, day, month, year, age));
 
 	} else
 		return false;
@@ -119,10 +115,56 @@ bool parseLine (istream &stream, vector <player_t> &group) {
 
 bool setup() {
 
-	ifstream file ("datafile.csv");
+	string fileName;
+	team_t team;
+	cout << "Enter name of file (should also be team name)";
+	cin >> fileName;
+	team.name = fileName;
 
-	while (parseLine (file, team));
-//	while (parseLine (cin, team));
+	cout << "    Player Name\t\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Birthdate\n\n";
+
+	fileName += ".csv";
+	ifstream file (fileName.c_str());
+
+	while (parseLine (file));
+}
+
+unsigned short averageHeight (){
+
+	vector <player_t*>::iterator it = roster.begin();
+	unsigned average = 0;
+
+	for (it = roster.begin(); it != roster.end(); ++it)
+		average += (*it)->height;
+
+	average /= roster.size();
+}
+
+unsigned short averageWeight (){
+
+	vector <player_t*>::iterator it = roster.begin();
+	unsigned average = 0;
+
+	for (it = roster.begin(); it != roster.end(); ++it)
+		average += (*it)->weight;
+
+	average /= roster.size();
+}
+
+unsigned short averageAge (){
+
+	vector <player_t*>::iterator it = roster.begin();
+	unsigned average = 0;
+
+	for (it = roster.begin(); it != roster.end(); ++it)
+		average += (*it)->height;
+
+	average /= roster.size();
+}
+
+void calculate() {
+
+
 }
 
 int main() {
@@ -132,10 +174,13 @@ int main() {
 //		calculate();
 //		sort();
 //		display();
+
+		return 0;
 	}
+	else return 1;
 
 
 
 
-	return 0;
+
 }
