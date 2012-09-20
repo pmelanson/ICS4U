@@ -117,54 +117,35 @@ bool setup() {
 
 	string fileName;
 	team_t team;
-	cout << "Enter name of file (should also be team name)";
+	cout << "Enter team name (should also be file name): ";
 	cin >> fileName;
 	team.name = fileName;
 
 	cout << "    Player Name\t\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Birthdate\n\n";
 
-	fileName += ".csv";
+	fileName += ".txt";
 	ifstream file (fileName.c_str());
+	if (file.good())
+		cout << "opened " << fileName << endl;
 
-	while (parseLine (file));
+	while (parseLine (file))
+		cout << "read line\n";
 }
 
-unsigned short averageHeight (){
+unsigned short average (){
 
 	vector <player_t*>::iterator it = roster.begin();
-	unsigned average = 0;
+	unsigned short averageAge=0, averageWeight=0, averageHeight=0;
 
-	for (it = roster.begin(); it != roster.end(); ++it)
-		average += (*it)->height;
+	for (it = roster.begin(); it != roster.end(); ++it){
+		averageHeight += (*it)->height;
+		averageWeight += (*it)->height;
+		averageAge += (*it)->height;
+	}
 
-	average /= roster.size();
-}
-
-unsigned short averageWeight (){
-
-	vector <player_t*>::iterator it = roster.begin();
-	unsigned average = 0;
-
-	for (it = roster.begin(); it != roster.end(); ++it)
-		average += (*it)->weight;
-
-	average /= roster.size();
-}
-
-unsigned short averageAge (){
-
-	vector <player_t*>::iterator it = roster.begin();
-	unsigned average = 0;
-
-	for (it = roster.begin(); it != roster.end(); ++it)
-		average += (*it)->height;
-
-	average /= roster.size();
-}
-
-void calculate() {
-
-
+	averageHeight /= roster.size();
+	averageWeight /= roster.size();
+	averageAge /= roster.size();
 }
 
 int main() {
