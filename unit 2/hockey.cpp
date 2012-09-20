@@ -2,14 +2,27 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <unistd.h>
 using namespace std;
 
 struct team_t {
 
 	string name;	//team name
-	unsigned short height;	//average
-	unsigned short weight;	//also average
-	unsigned short age;	//again, average
+	unsigned height;	//average
+	unsigned weight;	//also average
+	unsigned age;	//again, average
+
+	team_t (string _name, unsigned _height, unsigned _weight, unsigned _age) :
+		name (_name), height (_height), weight (_weight), age (_age) {
+		cout << name;
+		if (name.length() > 15)
+			cout << "\t" << height;
+		else
+			cout << "\t\t" << height;
+		cout << "\t\t" << weight;
+		cout << "\t\t" << age;
+		cout << endl;
+	}
 };
 
 struct player_t {
@@ -53,6 +66,7 @@ struct player_t {
 };
 
 vector <player_t*> roster;
+vector <team_t*> league;
 
 bool parseLine (istream &stream) {
 
@@ -114,63 +128,49 @@ bool parseLine (istream &stream) {
 	return true;
 }
 
+void average (vector <player_t*> dataset, unsigned &height, unsigned &weight, unsigned &age){
+
+	vector <player_t*>::iterator it = dataset.begin();
+
+	for (it = dataset.begin(); it != dataset.end(); ++it){
+		height += (*it)->height;
+		weight += (*it)->weight;
+		age += (*it)->age;
+	}
+
+	height /= dataset.size();
+	weight /= dataset.size();
+	age /= dataset.size();
+}
+
 bool setup() {
 
-	string fileName;
-	team_t team;
-<<<<<<< HEAD
+	string teamName, fileName;
+	unsigned height=0, weight=0, age=0;
+
 	cout << "Enter team name (should also be file name): ";
-=======
-	cout << "Enter name of file (should also be team name): ";
->>>>>>> dbe0a255d000477a5a76a085eb4daa8ebdd7e349
-	cin >> fileName;
-	team.name = fileName;
-
-	cout << "    Player Name\t\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Birthdate\t" << "Age\n\n";
-
-	fileName += ".txt";
+	cin >> teamName;
+	fileName = teamName + ".txt";
 	ifstream file (fileName.c_str());
 	if (file.good())
 		cout << "opened " << fileName << endl;
 
-<<<<<<< HEAD
-	while (parseLine (file))
-		cout << "read line\n";
-=======
-	while (parseLine (file));	//loops, reading in a line from the file into a new player, until it fails
->>>>>>> dbe0a255d000477a5a76a085eb4daa8ebdd7e349
+	cout << "    Player Name\t\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Birthdate\t" << "Age\n\n";
+
+	while (parseLine (file));	//reads all players
+	average (roster, height, weight, age);
+	cout << "\n\n\nTeam Name\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Age\n\n";
+	league.push_back (new team_t(teamName, height, weight, age));	//creates a new team
 }
 
-unsigned short average (){
-
-	vector <player_t*>::iterator it = roster.begin();
-	unsigned short averageAge=0, averageWeight=0, averageHeight=0;
-
-	for (it = roster.begin(); it != roster.end(); ++it){
-		averageHeight += (*it)->height;
-		averageWeight += (*it)->height;
-		averageAge += (*it)->height;
-	}
-
-	averageHeight /= roster.size();
-	averageWeight /= roster.size();
-	averageAge /= roster.size();
-}
 
 int main() {
 
 	if (setup()) {
 
-//		calculate();
 //		sort();
-//		display();
 
 		return 0;
 	}
 	else return 1;
-
-
-
-
-
 }
