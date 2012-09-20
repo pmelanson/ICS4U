@@ -43,12 +43,13 @@ struct player_t {
 			cout << "\t\t" << height;
 		cout << "\t\t" << weight;
 		cout << "\t\t", birthday.printBirthday();
+		cout << "\t" << age;
 		cout << endl;
 	}
 
-//	~player_t : {
-//		cout << "WHAT DID I DO WRONG WHY ARE YOU DELETING ME\n";
-//	}
+	~player_t() {
+		cout << "WHAT DID I DO WRONG WHY ARE YOU DELETING ME\n";
+	}
 };
 
 vector <player_t*> roster;
@@ -117,19 +118,27 @@ bool setup() {
 
 	string fileName;
 	team_t team;
+<<<<<<< HEAD
 	cout << "Enter team name (should also be file name): ";
+=======
+	cout << "Enter name of file (should also be team name): ";
+>>>>>>> dbe0a255d000477a5a76a085eb4daa8ebdd7e349
 	cin >> fileName;
 	team.name = fileName;
 
-	cout << "    Player Name\t\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Birthdate\n\n";
+	cout << "    Player Name\t\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Birthdate\t" << "Age\n\n";
 
 	fileName += ".txt";
 	ifstream file (fileName.c_str());
 	if (file.good())
 		cout << "opened " << fileName << endl;
 
+<<<<<<< HEAD
 	while (parseLine (file))
 		cout << "read line\n";
+=======
+	while (parseLine (file));	//loops, reading in a line from the file into a new player, until it fails
+>>>>>>> dbe0a255d000477a5a76a085eb4daa8ebdd7e349
 }
 
 unsigned short average (){
