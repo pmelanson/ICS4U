@@ -43,12 +43,13 @@ struct player_t {
 			cout << "\t\t" << height;
 		cout << "\t\t" << weight;
 		cout << "\t\t", birthday.printBirthday();
+		cout << "\t" << age;
 		cout << endl;
 	}
 
-//	~player_t : {
-//		cout << "WHAT DID I DO WRONG WHY ARE YOU DELETING ME\n";
-//	}
+	~player_t() {
+		cout << "WHAT DID I DO WRONG WHY ARE YOU DELETING ME\n";
+	}
 };
 
 vector <player_t*> roster;
@@ -117,16 +118,16 @@ bool setup() {
 
 	string fileName;
 	team_t team;
-	cout << "Enter name of file (should also be team name)";
+	cout << "Enter name of file (should also be team name): ";
 	cin >> fileName;
 	team.name = fileName;
 
-	cout << "    Player Name\t\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Birthdate\n\n";
+	cout << "    Player Name\t\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Birthdate\t" << "Age\n\n";
 
-	fileName += ".csv";
+	fileName += ".txt";
 	ifstream file (fileName.c_str());
 
-	while (parseLine (file));
+	while (parseLine (file));	//loops, reading in a line from the file into a new player, until it fails
 }
 
 unsigned short averageHeight (){
