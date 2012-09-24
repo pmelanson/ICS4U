@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1348512923 source:d:\aardvark\ics4u\unit 2\hockey.cpp
+	<iostream>
+	<fstream>
+	<sstream>
+	<vector>
+	<unistd.h>
+

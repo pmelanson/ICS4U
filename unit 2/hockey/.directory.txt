@@ -1,0 +1,4 @@
+.directory.txt
+bin
+hockey.cbp
+obj

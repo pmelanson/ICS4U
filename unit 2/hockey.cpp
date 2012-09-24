@@ -128,11 +128,11 @@ bool parseLine (istream &stream) {
 	return true;
 }
 
-void average (vector <player_t*> dataset, unsigned &height, unsigned &weight, unsigned &age){
+void average (vector <player_t*> dataset, unsigned &height, unsigned &weight, unsigned &age) {
 
 	vector <player_t*>::iterator it = dataset.begin();
 
-	for (it = dataset.begin(); it != dataset.end(); ++it){
+	for (it = dataset.begin(); it != dataset.end(); ++it) {
 		height += (*it)->height;
 		weight += (*it)->weight;
 		age += (*it)->age;
@@ -143,24 +143,50 @@ void average (vector <player_t*> dataset, unsigned &height, unsigned &weight, un
 	age /= dataset.size();
 }
 
-bool setup() {
+bool getTeam (string teamName) {
 
-	string teamName, fileName;
-	unsigned height=0, weight=0, age=0;
-
-	cout << "Enter team name (should also be file name): ";
-	cin >> teamName;
-	fileName = teamName + ".txt";
-	ifstream file (fileName.c_str());
-	if (file.good())
-		cout << "opened " << fileName << endl;
-
-	cout << "    Player Name\t\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Birthdate\t" << "Age\n\n";
+	ifstream file (string (teamName+".txt").c_str());	//adds .txt to teamName
 
 	while (parseLine (file));	//reads all players
+	unsigned height=0, weight=0, age=0;
 	average (roster, height, weight, age);
-	cout << "\n\n\nTeam Name\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Age\n\n";
+	roster.clear();	//cleans up for the next time getTeam will be called
+
 	league.push_back (new team_t(teamName, height, weight, age));	//creates a new team
+
+	return true;
+}
+
+bool setup() {
+
+	chdir("AllTeams");
+	system("dir > .directory.txt /b");
+
+//	cout << "    Player Name\t\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Birthdate\t" << "Age\n\n";
+
+//	cout << "Enter team name (should also be file name): ";
+//	cin >> teamName;
+//	fileName = teamName + ".txt";
+//	ifstream file (fileName.c_str());
+//	if (file.good())
+//		cout << "opened " << fileName << endl;
+
+	cout << "\n\n\nTeam Name\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Age\n\n";
+
+	string teamName ("");
+
+	ifstream directory (".directory.txt");
+
+	do {
+		getline (directory, teamName, '.');	//read a teamname in from .directory.txt, continuing until the first '.' is reached, at which point...
+		cout << "poop";
+		teamName = "pooper";
+		cout << teamName;
+		directory.ignore (256, '\n');	//...we skip to the next line
+		cout << "poop";
+	} while (getTeam (teamName));
+
+	return true;
 }
 
 
@@ -171,6 +197,5 @@ int main() {
 //		sort();
 
 		return 0;
-	}
-	else return 1;
+	} else return 1;
 }
