@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -8,14 +9,12 @@ using namespace std;
 struct team_t {
 
 	string name;	//team name
-	unsigned height;	//average
-	unsigned weight;	//also average
-	unsigned age;	//again, average
+	float height, weight, age;	//averages of everything
 
-	team_t (string _name, unsigned _height, unsigned _weight, unsigned _age) :
+	team_t (string _name, float _height, float _weight, float _age) :	//constructs a team entry, and prints out the data in columns
 		name (_name), height (_height), weight (_weight), age (_age) {
 		cout << name;
-		if (name.length() > 15)
+		if (name.length() > 7)
 			cout << "\t" << height;
 		else
 			cout << "\t\t" << height;
@@ -49,7 +48,7 @@ struct player_t {
 
 	player_t (string _name, unsigned short _height, unsigned short _weight, unsigned short _day, unsigned short _month, unsigned _year, unsigned short _age) :	//constructor
 		name (_name), height (_height), weight (_weight), birthday (_day, _month, _year), age (_age) {
-		cout << name;
+/*		cout << name;
 		if (name.length() > 15)
 			cout << "\t" << height;
 		else
@@ -58,7 +57,9 @@ struct player_t {
 		cout << "\t\t", birthday.printBirthday();
 		cout << "\t" << age;
 		cout << endl;
+*/
 	}
+
 
 	~player_t() {
 		cout << "WHAT DID I DO WRONG WHY ARE YOU DELETING ME\n";
@@ -128,7 +129,7 @@ bool parseLine (istream &stream) {
 	return true;
 }
 
-void average (vector <player_t*> dataset, unsigned &height, unsigned &weight, unsigned &age) {
+void average (vector <player_t*> dataset, float &height, float &weight, float &age) {
 
 	vector <player_t*>::iterator it = dataset.begin();
 
@@ -145,10 +146,10 @@ void average (vector <player_t*> dataset, unsigned &height, unsigned &weight, un
 
 bool getTeam (string teamName) {
 
-	ifstream file (string (teamName+".txt").c_str());	//adds .txt to teamName
+	ifstream file (string(teamName+".txt").c_str());	//adds .txt to teamName
 
 	while (parseLine (file));	//reads all players
-	unsigned height=0, weight=0, age=0;
+	float height=0, weight=0, age=0;
 	average (roster, height, weight, age);
 	roster.clear();	//cleans up for the next time getTeam will be called
 
@@ -160,7 +161,7 @@ bool getTeam (string teamName) {
 bool setup() {
 
 	chdir("AllTeams");
-	system("dir > .directory.txt /b");
+	system("dir > Zdirectory.txt /b");
 
 //	cout << "    Player Name\t\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Birthdate\t" << "Age\n\n";
 
@@ -175,16 +176,17 @@ bool setup() {
 
 	string teamName ("");
 
-	ifstream directory (".directory.txt");
+	ifstream directory ("Zdirectory.txt");
 
 	do {
 		getline (directory, teamName, '.');	//read a teamname in from .directory.txt, continuing until the first '.' is reached, at which point...
-		cout << "poop";
-		teamName = "pooper";
-		cout << teamName;
+		if (teamName == "Zdirectory") break;	//it shouldn't read teamdata from the file index
 		directory.ignore (256, '\n');	//...we skip to the next line
-		cout << "poop";
-	} while (getTeam (teamName));
+	} while (getTeam (teamName));	//gets team stats from file
+
+	directory.close();
+
+	system("del Zdirectory.txt");
 
 	return true;
 }
