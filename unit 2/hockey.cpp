@@ -70,6 +70,22 @@ struct player_t {
 vector <player_t*> roster;
 vector <team_t*> league;
 
+void printTeam (vector <team_t*> list) {
+
+	vector <team_t*>::iterator it;
+
+	for (it = list.begin(); it < list.end(); ++it) {
+		cout << (*it)->name;
+		if ((*it)->name.length() > 7)
+			cout << "\t" << (*it)->height;
+		else
+			cout << "\t\t" << (*it)->height;
+		cout << "\t\t" << (*it)->weight;
+		cout << "\t\t" << (*it)->age;
+		cout << endl;
+	}
+}
+
 bool parseLine (istream &stream) {
 
 	string buffer;
@@ -187,48 +203,51 @@ bool setup() {
 
 void sortHeight(vector <team_t*> &dataset) {
 
-	vector <team_t*>::iterator it, selected, compare = league.begin();	//declares iterators
+	vector <team_t*>::iterator it, selected, compare = dataset.begin();	//declares iterators
 
-/* 	for (it = league.begin(); it < --league.end(); ++it) {
- *
- * 		for (compare = ++league.begin(); compare < league.end(); ++compare)	//goes through the entire vector
- * 			if ((*compare)->height < (*selected)->height)	//finds the smallest height
- * 				selected = compare;	//if a smaller height than the one already selected is found, select the smaller height
- *
- * 		iter_swap((*it), (*selected));
- * 	}
- */
+	for (it = dataset.begin(); it != dataset.end(); ++it) {
+		cout << "\n\nITERATING";
+		cout << "\nbegin: " << &(*dataset.begin()) << ", end: " << &(*dataset.end());
+		for (compare = ++dataset.begin(); compare < dataset.end(); ++compare) {	//goes through the entire vector
+			cout << "\n" << &(*compare);
+		}
+		if ((*compare)->height < (*selected)->height) {	//finds the smallest height
+			cout << "\nFOUND ONE: " << (*compare)->height << " < " << (*selected)->height;
+			selected = compare;	//if a smaller height than the one already selected is found, select the smaller height
+		}
+
+		iter_swap((*it), (*selected));	//swaps smallest height with position n
+	}
 
 }
 
 void sortWeight(vector <team_t*> &dataset) {
 
-	vector <team_t*>::iterator it, selected, compare = league.begin();	//declares iterators
+	vector <team_t*>::iterator it, selected, compare = dataset.begin();	//declares iterators
 
-//	for (it = league.begin(); it < --league.end(); ++it) {
-//
-//		for (compare = ++league.begin(); compare < league.end(); ++compare)	//goes through the entire vector
-//			if ((*compare)->weight < (*selected)->weight)	//finds the smallest weight
-//				selected = compare;	//if a smaller weight than the one already selected is found, select the smaller weight
-//
-//		iter_swap((*it), (*selected));
-//	}
+	for (it = dataset.begin(); it != --dataset.end(); ++it) {
+
+		for (compare = ++dataset.begin(); compare < dataset.end(); ++compare)	//goes through the entire vector
+			if ((*compare)->weight < (*selected)->weight)	//finds the smallest weight
+				selected = compare;	//if a smaller weight than the one already selected is found, select the smaller weight
+
+		iter_swap((*it), (*selected));	//swaps smallest weight with position n
+	}
 
 }
 
 void sortAge(vector <team_t*> &dataset) {
 
-	vector <team_t*>::iterator it, selected, compare = league.begin();	//declares iterators
+	vector <team_t*>::iterator it, selected, compare = dataset.begin();	//declares iterators
 
-/* 	for (it = league.begin(); it < --league.end(); ++it) {
- *
- * 		for (compare = ++league.begin(); compare < league.end(); ++compare)	//goes through the entire vector
- * 			if ((*compare)->age < (*selected)->age)	//finds the smallest age
- * 				selected = compare;	//if a smaller age than the one already selected is found, select the smaller age
- *
- * 		iter_swap((*it), (*selected));
- * 	}
- */
+	for (it = dataset.begin(); it != ----dataset.end(); ++it) {
+
+		for (compare = ++dataset.begin(); compare < dataset.end(); ++compare)	//goes through the entire vector
+			if ((*compare)->age < (*selected)->age)	//finds the smallest age
+				selected = compare;	//if a smaller age than the one already selected is found, select the smaller age
+
+		iter_swap((*it), (*selected));	//swaps smallest age with position n
+	}
 
 }
 
@@ -238,38 +257,54 @@ bool sort(vector <team_t*> dataset) {
 	cout << "[1] Sort by height\n";
 	cout << "[2] Sort by weight\n";
 	cout << "[3] Sort by age\n";
-	cout << "> ";
+	cout << "[q] Quit\n";
+	cout << ">";
 
-	unsigned short choice;
+	char choice;
+
 	cin >> choice;
+	while (choice != '1' && choice != '2' && choice != '3' && tolower(choice) != 'q') {
+		cout << "\nThat choice wasn't listed\n";
+		cout << ">";
+		cin >> choice;
+	}
 
 	switch (choice) {
-	case 1:
+	case '1':
 		sortHeight(dataset);
 		break;
 
-	case 2:
+	case '2':
 		sortWeight(dataset);
 		break;
 
-	case 3:
+	case '3':
 		sortAge(dataset);
 		break;
+
+	case 'q':
+	case 'Q':
+		return false;
 
 	default:
 		cout << "Invalid input";
 		return false;
 	}
+
+	cout << "\n\n\nTeam Name\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Age\n\n";
+	printTeam (dataset);
+
+	return true;
 }
 
 int main() {
 
 	if (setup()) {
 
-		if (sort(league))	//runs sort
+		while (sort(league));	//runs sort
 		return 0;
-		else
-		return 1;	//if sorting fails
+//		else
+//			return 1;	//if sorting fails
 
 	} else return 2;
 }
