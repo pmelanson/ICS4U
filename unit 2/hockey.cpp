@@ -13,13 +13,19 @@ struct team_t {
 
 	team_t (string _name, float _height, float _weight, float _age) :	//constructs a team entry, and prints out the data in columns
 		name (_name), height (_height), weight (_weight), age (_age) {
-		cout << name;
-		if (name.length() > 7)
-			cout << "\t" << height;
-		else
-			cout << "\t\t" << height;
-		cout << "\t\t" << weight;
-		cout << "\t\t" << age;
+//		cout << name;
+//		if (name.length() > 7)
+//			cout << "\t" << height;
+//		else
+//			cout << "\t\t" << height;
+//		cout << "\t\t" << weight;
+//		cout << "\t\t" << age;
+//		cout << endl;
+//		cout << fixed << left << setprecision(1);	//sets flags
+		cout << setw(15) << name;
+		cout << setw(10) << height;
+		cout << setw(10) << weight;
+		cout << setw(10) << age;
 		cout << endl;
 	}
 };
@@ -69,19 +75,20 @@ struct player_t {
 
 vector <player_t*> roster;
 vector <team_t*> league;
+bool debug = false;;
 
 void printTeam (vector <team_t*> list) {
 
 	vector <team_t*>::iterator it;
 
 	for (it = list.begin(); it < list.end(); ++it) {
-		cout << (*it)->name;
-		if ((*it)->name.length() > 7)
-			cout << "\t" << (*it)->height;
-		else
-			cout << "\t\t" << (*it)->height;
-		cout << "\t\t" << (*it)->weight;
-		cout << "\t\t" << (*it)->age;
+		cout << setw(20) << left << (*it)->name;
+//		if ((*it)->name.length() > 7)
+//			cout << "\t" << (*it)->height;
+//		else
+		cout << setw(10) << setprecision(4) << (*it)->height;
+		cout << setw(10) << (*it)->weight;
+		cout << setw(10) << (*it)->age;
 		cout << endl;
 	}
 }
@@ -184,7 +191,8 @@ bool setup() {
 
 //	cout << "    Player Name\t\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Birthdate\t" << "Age\n\n";	//uncomment this if you want to display player stats as they are read in
 
-	cout << "\n\n\nTeam Name\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Age\n\n";
+	cout << fixed << left << setprecision(1);	//sets flags
+	cout << setw(15) << "Team Name" << setw(10) << "Height" << setw(10) << "Weight" << setw(10) << "Age\n\n";
 
 	ifstream directory ("Zdirectory.txt");
 	string teamName ("");
@@ -205,35 +213,46 @@ void sortHeight(vector <team_t*> &dataset) {
 
 	vector <team_t*>::iterator it, selected, compare = dataset.begin();	//declares iterators
 
-	for (it = dataset.begin(); it != dataset.end(); ++it) {
-		cout << "\n\nITERATING";
-		cout << "\nbegin: " << &(*dataset.begin()) << ", end: " << &(*dataset.end());
-		for (compare = ++dataset.begin(); compare < dataset.end(); ++compare) {	//goes through the entire vector
-			cout << "\n" << &(*compare);
-		}
-		if ((*compare)->height < (*selected)->height) {	//finds the smallest height
-			cout << "\nFOUND ONE: " << (*compare)->height << " < " << (*selected)->height;
+	for (it = dataset.begin(); it != ----dataset.end(); ++it) {
+		if (debug) cout << "\n\nITERATING";	//debug
+		if (debug) cout << "\nbegin: " << &(*dataset.begin()) << ", end: " << &(*dataset.end());	//debug
+		selected = it;
+		++selected;
+
+		for (compare = ++selected; compare < dataset.end(); ++compare) {	//goes through the entire vector
+			if (debug) cout << "\n" << &(*compare);	//debug
+			if ((*compare)->height < (*selected)->height) {	//finds the smallest height
+			if (debug) cout << "\tFOUND ONE: " << (*compare)->height << " < " << (*selected)->height;	//debug
 			selected = compare;	//if a smaller height than the one already selected is found, select the smaller height
+			}
 		}
 
 		iter_swap((*it), (*selected));	//swaps smallest height with position n
+		if (debug) cout << "\n\nit = " << &(*it);	//debug
 	}
-
 }
 
 void sortWeight(vector <team_t*> &dataset) {
 
 	vector <team_t*>::iterator it, selected, compare = dataset.begin();	//declares iterators
 
-	for (it = dataset.begin(); it != --dataset.end(); ++it) {
+	for (it = dataset.begin(); it != ----dataset.end(); ++it) {
+		if (debug) cout << "\n\nITERATING";	//debug
+		if (debug) cout << "\nbegin: " << &(*dataset.begin()) << ", end: " << &(*dataset.end());	//debug
+		selected = it;
+		++selected;
 
-		for (compare = ++dataset.begin(); compare < dataset.end(); ++compare)	//goes through the entire vector
-			if ((*compare)->weight < (*selected)->weight)	//finds the smallest weight
-				selected = compare;	//if a smaller weight than the one already selected is found, select the smaller weight
+		for (compare = ++selected; compare < dataset.end(); ++compare) {	//goes through the entire vector
+			if (debug) cout << "\n" << &(*compare);	//debug
+			if ((*compare)->weight < (*selected)->weight) {	//finds the smallest weight
+			if (debug) cout << "\tFOUND ONE: " << (*compare)->weight << " < " << (*selected)->weight;	//debug
+			selected = compare;	//if a smaller weight than the one already selected is found, select the smaller weight
+			}
+		}
 
 		iter_swap((*it), (*selected));	//swaps smallest weight with position n
+		if (debug) cout << "\n\nit = " << &(*it);	//debug
 	}
-
 }
 
 void sortAge(vector <team_t*> &dataset) {
@@ -241,14 +260,47 @@ void sortAge(vector <team_t*> &dataset) {
 	vector <team_t*>::iterator it, selected, compare = dataset.begin();	//declares iterators
 
 	for (it = dataset.begin(); it != ----dataset.end(); ++it) {
+		if (debug) cout << "\n\nITERATING";	//debug
+		if (debug) cout << "\nbegin: " << &(*dataset.begin()) << ", end: " << &(*dataset.end());	//debug
+		selected = it;
+		++selected;
 
-		for (compare = ++dataset.begin(); compare < dataset.end(); ++compare)	//goes through the entire vector
-			if ((*compare)->age < (*selected)->age)	//finds the smallest age
-				selected = compare;	//if a smaller age than the one already selected is found, select the smaller age
+		for (compare = ++selected; compare < dataset.end(); ++compare) {	//goes through the entire vector
+			if (debug) cout << "\n" << &(*compare);	//debug
+			if ((*compare)->age < (*selected)->age) {	//finds the smallest age
+			if (debug) cout << "\tFOUND ONE: " << (*compare)->age << " < " << (*selected)->age;	//debug
+			selected = compare;	//if a smaller age than the one already selected is found, select the smaller age
+			}
+		}
 
 		iter_swap((*it), (*selected));	//swaps smallest age with position n
+		if (debug) cout << "\n\nit = " << &(*it);	//debug
 	}
+}
 
+void shouldDebug() {
+
+	cout << "\nDo you want to print debug information [y/n]?";
+	cout << "\n>";
+	char shouldDebugInput;
+	cin >> shouldDebugInput;
+
+	switch (shouldDebugInput) {
+	case 'y':
+	case 'Y':
+	case '1':
+		debug = true;
+		break;
+	case 'n':
+	case 'N':
+	case '0':
+		debug = false;
+		break;
+	default:
+		cout << "\nThat doesn't make sense, defaulting to no debug";
+		debug = false;
+		break;
+	}
 }
 
 bool sort(vector <team_t*> dataset) {
@@ -271,14 +323,17 @@ bool sort(vector <team_t*> dataset) {
 
 	switch (choice) {
 	case '1':
+		shouldDebug();
 		sortHeight(dataset);
 		break;
 
 	case '2':
+		shouldDebug();
 		sortWeight(dataset);
 		break;
 
 	case '3':
+		shouldDebug();
 		sortAge(dataset);
 		break;
 
