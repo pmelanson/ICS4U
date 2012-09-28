@@ -4,26 +4,24 @@
 #include <sstream>
 #include <vector>
 #include <unistd.h>
+#include <math.h>
 using namespace std;
 
 struct team_t {
 
 	string name;	//team name
 	float height, weight, age;	//averages of everything
+	void printHeight() {	//prints height as (feet' inches")
+		unsigned short feet = (height / 12 + 0.5);
+		cout << feet  << "'" << fmodf(height, 12) << "\"\t ";
+//		cout << setw(10) << height;
+	}
 
 	team_t (string _name, float _height, float _weight, float _age) :	//constructs a team entry, and prints out the data in columns
 		name (_name), height (_height), weight (_weight), age (_age) {
-//		cout << name;
-//		if (name.length() > 7)
-//			cout << "\t" << height;
-//		else
-//			cout << "\t\t" << height;
-//		cout << "\t\t" << weight;
-//		cout << "\t\t" << age;
-//		cout << endl;
-//		cout << fixed << left << setprecision(1);	//sets flags
+		///prints team information///
 		cout << setw(15) << name;
-		cout << setw(10) << height;
+		printHeight();
 		cout << setw(10) << weight;
 		cout << setw(10) << age;
 		cout << endl;
@@ -55,16 +53,12 @@ struct player_t {
 	player_t (string _name, unsigned short _height, unsigned short _weight, unsigned short _day, unsigned short _month, unsigned _year, unsigned short _age) :	//constructor
 		name (_name), height (_height), weight (_weight), birthday (_day, _month, _year), age (_age) {
 		///uncomment this if you want players to print their data when constructed///
-		/*		cout << name;
-				if (name.length() > 15)
-					cout << "\t" << height;
-				else
-					cout << "\t\t" << height;
-				cout << "\t\t" << weight;
-				cout << "\t\t", birthday.printBirthday();
-				cout << "\t" << age;
-				cout << endl;
-		*/
+//		cout << setw(15) << "Player Name";
+//		cout << setw(10) << "Height";
+//		cout << setw(10) <<  "Weight";
+//		cout << setw(10) << "Birthdate";
+//		cout << setw(10) << "Age";
+//		cout << endl;
 	}
 
 
@@ -75,18 +69,15 @@ struct player_t {
 
 vector <player_t*> roster;
 vector <team_t*> league;
-bool debug = false;;
+bool debug = false;
 
-void printTeam (vector <team_t*> list) {
+void printTeams (vector <team_t*> list) {
 
 	vector <team_t*>::iterator it;
 
 	for (it = list.begin(); it < list.end(); ++it) {
-		cout << setw(20) << left << (*it)->name;
-//		if ((*it)->name.length() > 7)
-//			cout << "\t" << (*it)->height;
-//		else
-		cout << setw(10) << setprecision(4) << (*it)->height;
+		cout << setw(15) << (*it)->name;
+		(*it)->printHeight();
 		cout << setw(10) << (*it)->weight;
 		cout << setw(10) << (*it)->age;
 		cout << endl;
@@ -186,23 +177,23 @@ bool getTeam (string teamName) {
 
 bool setup() {
 
-	chdir("AllTeams");
-	system("dir > Zdirectory.txt /b");
+	chdir("AllTeams");	//changes working directory to the folder with all the teams in it
+	system("dir > Zdirectory.txt /b");	//generates a directory listing
 
-//	cout << "    Player Name\t\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Birthdate\t" << "Age\n\n";	//uncomment this if you want to display player stats as they are read in
+	cout << fixed << left << setprecision(1);	//sets cout flags
+//	cout << setw(15) << "Player Name" << setw(10) << "Height" << setw(10) <<  "Weight" << setw(10) << "Birthdate" << setw(10) << "Age" << endl << endl;	//uncomment this if you want to display player stats as they are read in
+	cout << setw(15) << "Team Name" << setw(10) << "Height" << setw(10) << "Weight" << setw(10) << "Age\n" << endl;	//prints column titles
 
-	cout << fixed << left << setprecision(1);	//sets flags
-	cout << setw(15) << "Team Name" << setw(10) << "Height" << setw(10) << "Weight" << setw(10) << "Age\n\n";
-
-	ifstream directory ("Zdirectory.txt");
-	string teamName ("");
+	ifstream directory ("Zdirectory.txt");	//opens up directory listing for reading
+	string teamName ("");	//initializes buffer for reading from directory list
 
 	do {
 		getline (directory, teamName, '.');	//read a teamname in from .directory.txt, continuing until the first '.' is reached, at which point...
-		if (teamName == "Zdirectory") break;	//it shouldn't read teamdata from the file index
+		if (teamName == "Zdirectory") break;	//...(it shouldn't read teamdata from the file index)...
 		directory.ignore (256, '\n');	//...we skip to the next line
 	} while (getTeam (teamName));	//gets team stats from file
 
+	//cleaning up
 	directory.close();
 	system("del Zdirectory.txt");
 
@@ -346,8 +337,8 @@ bool sort(vector <team_t*> dataset) {
 		return false;
 	}
 
-	cout << "\n\n\nTeam Name\t" << "Height (in.)\t" << "Weight (lbs.)\t" << "Age\n\n";
-	printTeam (dataset);
+	cout << setw(15) << "Team Name" << setw(10) << "Height" << setw(10) << "Weight" << setw(10) << "Age\n" << endl;	//prints column titles
+	printTeams (dataset);
 
 	return true;
 }
