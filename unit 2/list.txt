@@ -1,6 +1,0 @@
-Hockey Stats 2012 Assignment.doc
-list.txt
-One Line.txt
-String Class Functions.cpp
-Untitled1.cpp
-Untitled1.exe

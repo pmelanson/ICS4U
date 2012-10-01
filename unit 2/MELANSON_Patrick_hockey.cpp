@@ -13,8 +13,7 @@ struct team_t {
 	float height, weight, age;	//averages of everything
 	void printHeight() {	//prints height as (feet' inches")
 		unsigned short feet = (height / 12 + 0.5);
-		cout << feet  << "'" << fmodf(height, 12) << "\"\t ";
-//		cout << setw(10) << height;
+		cout << feet  << "' " << fmodf(height, 12) << "\"\t ";
 	}
 
 	team_t (string _name, float _height, float _weight, float _age) :	//constructs a team entry, and prints out the data in columns
@@ -38,7 +37,7 @@ struct player_t {
 		unsigned short month;
 		unsigned year;
 
-		void printBirthday() {
+		void printBirthday() {	//prints date
 			cout << day << '/' << month << '/' << year;
 		}
 
@@ -90,7 +89,8 @@ bool parseLine (istream &stream) {
 	if (getline (stream, buffer)) {	//reads line into buffer
 		istringstream line (buffer);	//turns the entire line into a stream
 
-		string name;	//declarations
+		///declarations///
+		string name;
 		unsigned short feet, inches;
 		unsigned short day, month;
 		unsigned year;
@@ -136,7 +136,7 @@ bool parseLine (istream &stream) {
 		} else
 			return false;
 
-		roster.push_back (new player_t (name, (12 * feet) + inches, weight, day, month, year, age));
+		roster.push_back (new player_t (name, (12 * feet) + inches, weight, day, month, year, age));	//makes a new player
 
 	} else
 		return false;
@@ -166,7 +166,7 @@ bool getTeam (string teamName) {
 	while (parseLine (file));	//reads all players
 	float height=0, weight=0, age=0;
 
-	average (roster, height, weight, age);
+	average (roster, height, weight, age);	//calculates averages for player stats
 	league.push_back (new team_t(teamName, height, weight, age));	//creates a new team, with the calculated data
 
 	roster.clear();	//cleans up for the next time getTeam will be called
@@ -177,7 +177,7 @@ bool getTeam (string teamName) {
 
 bool setup() {
 
-	chdir("AllTeams");	//changes working directory to the folder with all the teams in it
+	chdir("teams");	//changes working directory to the folder with all the teams in it
 	system("dir > Zdirectory.txt /b");	//generates a directory listing
 
 	cout << fixed << left << setprecision(1);	//sets cout flags
@@ -204,13 +204,13 @@ void sortHeight(vector <team_t*> &dataset) {
 
 	vector <team_t*>::iterator it, selected, compare = dataset.begin();	//declares iterators
 
-	for (it = dataset.begin(); it != ----dataset.end(); ++it) {
+	for (it = dataset.begin(); it != --dataset.end(); it++) {
 		if (debug) cout << "\n\nITERATING";	//debug
 		if (debug) cout << "\nbegin: " << &(*dataset.begin()) << ", end: " << &(*dataset.end());	//debug
+		if (debug) cout << "\nit = " << &(*it) << endl;	//debug
 		selected = it;
-		++selected;
 
-		for (compare = ++selected; compare < dataset.end(); ++compare) {	//goes through the entire vector
+		for (compare = selected; compare < dataset.end(); ++compare) {	//goes through the entire vector
 			if (debug) cout << "\n" << &(*compare);	//debug
 			if ((*compare)->height < (*selected)->height) {	//finds the smallest height
 			if (debug) cout << "\tFOUND ONE: " << (*compare)->height << " < " << (*selected)->height;	//debug
@@ -219,21 +219,20 @@ void sortHeight(vector <team_t*> &dataset) {
 		}
 
 		iter_swap((*it), (*selected));	//swaps smallest height with position n
-		if (debug) cout << "\n\nit = " << &(*it);	//debug
 	}
 }
 
 void sortWeight(vector <team_t*> &dataset) {
 
-	vector <team_t*>::iterator it, selected, compare = dataset.begin();	//declares iterators
+	vector <team_t*>::iterator it, selected, compare;	//declares iterators
 
-	for (it = dataset.begin(); it != ----dataset.end(); ++it) {
+	for (it = dataset.begin(); it != --dataset.end(); it++) {
 		if (debug) cout << "\n\nITERATING";	//debug
 		if (debug) cout << "\nbegin: " << &(*dataset.begin()) << ", end: " << &(*dataset.end());	//debug
+		if (debug) cout << "\nit = " << &(*it) << endl;	//debug
 		selected = it;
-		++selected;
 
-		for (compare = ++selected; compare < dataset.end(); ++compare) {	//goes through the entire vector
+		for (compare = selected; compare < dataset.end(); ++compare) {	//goes through the entire vector
 			if (debug) cout << "\n" << &(*compare);	//debug
 			if ((*compare)->weight < (*selected)->weight) {	//finds the smallest weight
 			if (debug) cout << "\tFOUND ONE: " << (*compare)->weight << " < " << (*selected)->weight;	//debug
@@ -242,7 +241,6 @@ void sortWeight(vector <team_t*> &dataset) {
 		}
 
 		iter_swap((*it), (*selected));	//swaps smallest weight with position n
-		if (debug) cout << "\n\nit = " << &(*it);	//debug
 	}
 }
 
@@ -250,13 +248,13 @@ void sortAge(vector <team_t*> &dataset) {
 
 	vector <team_t*>::iterator it, selected, compare = dataset.begin();	//declares iterators
 
-	for (it = dataset.begin(); it != ----dataset.end(); ++it) {
+	for (it = dataset.begin(); it != --dataset.end(); it++) {
 		if (debug) cout << "\n\nITERATING";	//debug
 		if (debug) cout << "\nbegin: " << &(*dataset.begin()) << ", end: " << &(*dataset.end());	//debug
+		if (debug) cout << "\nit = " << &(*it) << endl;	//debug
 		selected = it;
-		++selected;
 
-		for (compare = ++selected; compare < dataset.end(); ++compare) {	//goes through the entire vector
+		for (compare = selected; compare < dataset.end(); ++compare) {	//goes through the entire vector
 			if (debug) cout << "\n" << &(*compare);	//debug
 			if ((*compare)->age < (*selected)->age) {	//finds the smallest age
 			if (debug) cout << "\tFOUND ONE: " << (*compare)->age << " < " << (*selected)->age;	//debug
@@ -265,7 +263,6 @@ void sortAge(vector <team_t*> &dataset) {
 		}
 
 		iter_swap((*it), (*selected));	//swaps smallest age with position n
-		if (debug) cout << "\n\nit = " << &(*it);	//debug
 	}
 }
 
@@ -337,6 +334,7 @@ bool sort(vector <team_t*> dataset) {
 		return false;
 	}
 
+	cout << endl << "\n\n";
 	cout << setw(15) << "Team Name" << setw(10) << "Height" << setw(10) << "Weight" << setw(10) << "Age\n" << endl;	//prints column titles
 	printTeams (dataset);
 
@@ -345,12 +343,10 @@ bool sort(vector <team_t*> dataset) {
 
 int main() {
 
-	if (setup()) {
+	if (setup()) {	//only run program if successfully set up
 
-		while (sort(league));	//runs sort
-		return 0;
-//		else
-//			return 1;	//if sorting fails
+		while (sort(league))	//runs sorting
+			return 0;
 
-	} else return 2;
+	} else return 1;
 }
