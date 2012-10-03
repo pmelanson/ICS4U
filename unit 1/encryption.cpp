@@ -7,26 +7,30 @@ int main() {
 
     //initialization
     int i = 0, n = 0;
-    char cipher[7], plaintext[61], ciphertext[61];
+    string cipher, plaintext, ciphertext;
     char encrypted;
-    ifstream inFile;
-    inFile.open ("message.txt");
+    ifstream inFile ("message.txt");;
 
-    inFile.getline (cipher, 7);	//read cipher
+    getline (inFile, cipher);	//read cipher
     cout << cipher << endl;
-    inFile.getline (plaintext, 61);	//read plaintext
+    getline (inFile, plaintext);	//read plaintext
     cout << plaintext << endl;
 
-    do	//encrypts message using cipher
-		if (isupper (plaintext[i])) {	//checks if the char is an uppercase letter
-			encrypted = plaintext[i] + cipher[n % strlen(cipher)] - 'A';  //encrypt
-			while (encrypted > 'Z')	encrypted -= 26;	//deals with out-of-ranges
-		ciphertext[n++] = encrypted;	//assigns encrypted char to string
-	}
-	while (plaintext[i++]);
-	ciphertext[n] = '\0';	//finishes up with string
+//		if (isupper (plaintext[i])) {	//checks if the char is an uppercase letter
+//    do	//encrypts message using cipher
+//			encrypted = plaintext[i] + cipher[n%cipher.length()] - 'A';  //encrypt
+//			while (encrypted > 'Z')	encrypted -= 26;	//deals with out-of-ranges
+//		ciphertext[n++] = encrypted;	//assigns encrypted char to string
+//	}
+//	while (plaintext[i++]);
+//	ciphertext[n] = '\0';	//finishes up with string
 
-	cout << "\n\nCiphertext: " << ciphertext << endl;	//displays encrypted message
+	replace_if(plaintext.begin(), plaintext.end(), isalpha,
+		plaintext[i] + cipher[n%cipher.length()] - 'A';  //encrypt
+	);
+//	transform (plaintext.begin(), plaintext.end(), ciphertext.begin(), plaintext[i] + cipher[n%cipher.length()] - 'A');
+
+	cout << "\n\nCiphertext: " << plaintext << endl;	//displays encrypted message
 
 	inFile.close(), inFile.clear();	//finishes up with file
     system("pause");
