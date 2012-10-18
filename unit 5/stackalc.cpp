@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 using namespace std;
 
 
@@ -11,29 +12,49 @@ public:
 		if (top != 19) data[++top] = x;	//sets value if it won't overflow stack
 	}
 	float pop() {
-		if (top != -1) return data[top--];	//returns value if stack is not empty
-		else return top;	//returns error
+		return (top != -1) ? data[top--] : 0;	//returns value if stack is not empty, otherwise 0
 	}
 
 	stack_t() : top (-1) {}	//initializes top to -1
 
 };
 
-class calc_t : stack_t {
+class RPN_t : public stack_t {
 
-
+public:
+	void add() {push (pop() + pop());}
+	void sub() {push (pop() - pop());}
+	void mult() {push (pop() * pop());}
+	void div() {push (pop() / pop());}
 };
-
 
 int main() {
 
-	stack_t stack;
-	int n, x = 0;
+	RPN_t calc;
 
-	for (n=0; n<22; n++) {
-		stack.push(x++);
-		cout << stack.pop() << endl;
-	}
+	calc.push(5);
+	calc.push(6);
+
+	calc.add();
+	cout << calc.pop() << endl;
+
+	calc.push(5);
+	calc.push(6);
+
+	calc.sub();
+	cout << calc.pop() << endl;
+
+	calc.push(5);
+	calc.push(6);
+
+	calc.mult();
+	cout << calc.pop() << endl;
+
+	calc.push(5);
+	calc.push(6);
+
+	calc.div();
+	cout << calc.pop() << endl;
 
 	return 0;
 }
