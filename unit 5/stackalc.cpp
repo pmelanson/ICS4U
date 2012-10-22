@@ -18,58 +18,31 @@ public:
 	stack_t() : top (-1) {}	//initializes top to -1
 
 };
-/*
+
 class RPN_t : public stack_t {
 private:
-//	RPN_t();
-//	static RPN_t* _instance;
+	//private constructor
+	RPN_t();
+	//override default functions
+	RPN_t(RPN_t const& copy);            //no definition
+	RPN_t& operator=(RPN_t const& copy); //no definition
+
 public:
-	static RPN_t& getInstance() {
-            // The only instance
-            static RPN_t _instance;
-            return _instance;
+	static RPN_t* getInstance() {
+		static RPN_t* instance;	//only ever has one instance
+		return instance;
 	}
 
+	//operators
 	void add() {push (pop() + pop());}
 	void sub() {push (pop() - pop());}
 	void mult() {push (pop() * pop());}
 	void div() {push (pop() / pop());}
 };
-*/
-class RPN_t : public stack_t {
-private:
-	RPN_t();
-	// Stop the compiler generating methods of copy the object
-	RPN_t(RPN_t const& copy);	//I don't implement this
-	RPN_t& operator=(RPN_t const& copy);	//or this
 
-public:
-	static RPN_t& getInstance() {
-		// The only instance
-		// Guaranteed to be lazy initialized
-		// Guaranteed that it will be destroyed correctly
-		static RPN_t instance;
-		return instance;
-	}
-};
+RPN_t* calc = RPN_t::getInstance();
 
-RPN_t calc = RPN_t::getInstance();
 
-//RPN_t RPN_t::instance()
-//{
-//	if(_instance==NULL)
-//	{
-//		_instance=new RPN_t;
-//	}
-//	return _instance;
-//}
-
-//RPN_t RPN_t::_instance=NULL;
-
-//RPN_t calc = RPN_t::getInstance();
-
-//RPN_t poop = RPN_t::getInstance();
-/*
 bool getInput() {
 
 	cout << "[q]\t\tQuit\n";
@@ -89,25 +62,24 @@ bool getInput() {
 		cout << "\nThat choice wasn't listed\n";
 		cout << ">";
 		cin >> choice;
-	}//	cout << calc.pop();
-//	cout << poop.pop();
+	}
 
 
 	switch (choice) {
 	case '+':
-		calc.add();
+		calc->add();
 		break;
 
 	case '-':
-		calc.sub();
+		calc->sub();
 		break;
 
 	case '*':
-		calc.mult();
+		calc->mult();
 		break;
 
 	case '/':
-		calc.div();
+		calc->div();
 		break;
 
 	case 'q':
@@ -120,13 +92,19 @@ bool getInput() {
 
 	return true;
 }
-*/
+
+
+
 int main() {
 
-//	calc.push(5);
-//	poop.push(8);
-//	cout << calc.pop();
-//	cout << poop.pop();
+//	calc->push(5);
+//	calc->push(8);
+//	cout << calc->pop();
+//	cout << calc->pop();
+
+	cout << &calc;
+	calc->push(1.2);
+
 
 	return 0;
 }
