@@ -31,6 +31,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="include\stack.cpp" />
+		<Unit filename="include\stack.h" />
+		<Unit filename="stackalc.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
