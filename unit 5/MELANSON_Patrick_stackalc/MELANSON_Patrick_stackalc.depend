@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1350958672 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\stackalc.cpp
+	<iostream>
+	<sstream>
+
