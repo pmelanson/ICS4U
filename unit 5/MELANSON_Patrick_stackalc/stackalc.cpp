@@ -1,31 +1,9 @@
 #include <iostream>
 #include <sstream>
-#include "include\stack.h"
+#include "include\RPN.h"
 using namespace std;
 
-
-
-class RPN_t : public stack_t {
-private:
-	RPN_t() {}	//private constructor
-	//override default functions
-	RPN_t(RPN_t const& copy);            //no definition
-	RPN_t& operator=(RPN_t const& copy); //no definition
-
-public:
-	static RPN_t& getInstance() {
-		static RPN_t instance;	//only ever has one instance, no matter how many times getInstance is called
-		return instance;
-	}
-
-	//operators
-	void add() {push (pop() + pop());}
-	void sub() {push (pop() - pop());}
-	void mult() {push (pop() * pop());}
-	void div() {push (pop() / pop());}
-};
-
-RPN_t& calc = RPN_t::getInstance();
+RPN_t& calc = RPN_t::getInstance();	//creates an RPN singleton
 
 
 bool getInput() {
@@ -35,7 +13,7 @@ bool getInput() {
 	cout << "[-]\t\tsubtract top two numbers\n";
 	cout << "[*]\t\tmultiply top two numbers\n";
 	cout << "[/]\t\tdivide top two numbers\n";
-	cout << "[#[num]]\tadd number to stack\n";
+	cout << "[num]\tadd number to stack\n";
 	cout << ">";
 
 	string buffer;
@@ -90,7 +68,6 @@ bool getInput() {
 
 	return true;
 }
-
 
 
 int main() {
