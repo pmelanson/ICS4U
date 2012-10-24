@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include "include\stack.h"
 using namespace std;
 
 
