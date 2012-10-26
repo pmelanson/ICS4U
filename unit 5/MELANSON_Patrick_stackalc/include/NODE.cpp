@@ -12,7 +12,10 @@ NODE_t::NODE_t (float x) {
 	nextNode = 0;	//is really NULL, but I'd have to include another library for that
 }
 
-void NODE_t::link (NODE_t* node) {
+NODE_t* NODE_t::next() {
+	return nextNode;
+}
 
+void NODE_t::link (NODE_t* node) {
 	nextNode = node;
 }

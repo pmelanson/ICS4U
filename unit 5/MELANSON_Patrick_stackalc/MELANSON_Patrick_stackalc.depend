@@ -3,15 +3,16 @@
 	<iostream>
 	<sstream>
 
-1351102388 source:d:\aardvark\ics4u\unit 5\melanson_patrick_stackalc\include\stack.cpp
+1351274421 source:d:\aardvark\ics4u\unit 5\melanson_patrick_stackalc\include\stack.cpp
 	"stack.h"
+	<iostream>
 
 1351105052 d:\aardvark\ics4u\unit 5\melanson_patrick_stackalc\include\stack.h
 	"NODE.h"
 
 1351100949 d:\aardvark\ics4u\unit 5\melanson_patrick_stackalc\include\stack.cpp
 
-1351103668 source:d:\aardvark\ics4u\unit 5\melanson_patrick_stackalc\stackalc.cpp
+1351274131 source:d:\aardvark\ics4u\unit 5\melanson_patrick_stackalc\stackalc.cpp
 	<iostream>
 	<sstream>
 	"include\RPN.h"
@@ -22,7 +23,7 @@
 1351101919 source:d:\aardvark\ics4u\unit 5\melanson_patrick_stackalc\include\rpn.cpp
 	"RPN.h"
 
-1351103654 source:d:\aardvark\ics4u\unit 5\melanson_patrick_stackalc\include\node.cpp
+1351274437 source:d:\aardvark\ics4u\unit 5\melanson_patrick_stackalc\include\node.cpp
 	"NODE.h"
 
 1351103763 d:\aardvark\ics4u\unit 5\melanson_patrick_stackalc\include\node.h

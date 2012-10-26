@@ -1,4 +1,5 @@
 #include "stack.h"
+#include <iostream>
 //
 //void stack_t::push(float x) {
 //	if (top != 19) data[++top] = x;
@@ -16,13 +17,13 @@ void stack_t::push(float x) {
 
 float stack_t::pop() {
 	float temp = head->data;
-	head = head->next;
+	head = head->next();
 	return temp;
 }
 
 float stack_t::peek() {
-	return (top != -1) ? data[top] : 0;
+	return (!head) ? head->data : 0;
 }
 
-stack_t::stack_t() : top (-1), head (0) {
+stack_t::stack_t() : head (0) {
 }

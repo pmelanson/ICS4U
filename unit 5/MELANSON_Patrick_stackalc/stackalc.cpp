@@ -8,12 +8,12 @@ RPN_t& calc = RPN_t::getInstance();	//creates an RPN singleton
 
 bool getInput() {
 
-	cout << "[q]\t\tQuit\n";
-	cout << "[+]\t\tAdd top two numbers\n";
-	cout << "[-]\t\tsubtract top two numbers\n";
-	cout << "[*]\t\tmultiply top two numbers\n";
-	cout << "[/]\t\tdivide top two numbers\n";
 	cout << "[num]\tadd number to stack\n";
+	cout << "[q]\tQuit\n";
+	cout << "[+]\tAdd top two numbers\n";
+	cout << "[-]\tsubtract top two numbers\n";
+	cout << "[*]\tmultiply top two numbers\n";
+	cout << "[/]\tdivide top two numbers\n";
 	cout << ">";
 
 	string buffer;
@@ -22,9 +22,9 @@ bool getInput() {
 
 	char arg;	//argument
 	istringstream input (buffer);
-	arg = tolower(input.get());
+	arg = tolower(input.peek());
 
-	while (arg != 'q' && arg != '+' && arg != '-' && arg != '*' && arg != '/' && arg != '#') {
+	while (arg != 'q' && arg != '+' && arg != '-' && arg != '*' && arg != '/' && !isdigit(arg)) {
 		cout << "\nThat choice wasn't listed\n";
 		cout << ">";
 		cin >> buffer;
@@ -34,12 +34,17 @@ bool getInput() {
 	}
 
 	float num;
-	input >> num;
+
+	if (isdigit(arg)) {
+		input >> num;
+		arg = '#';
+	}
 
 
 	switch (arg) {
 	case '#':
 		calc.push(num);
+		cout << num;
 		break;
 
 	case '+':
@@ -73,7 +78,7 @@ bool getInput() {
 int main() {
 
 	while(getInput())
-		cout << calc.peek() << endl << calc.peek() << "\n\n";
+		cout << calc.peek() << "\n\n";
 
 
 	return 0;
