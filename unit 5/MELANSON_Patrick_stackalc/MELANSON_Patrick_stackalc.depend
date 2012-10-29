@@ -1,7 +1,8 @@
 # depslib dependency file v1.0
-1350958672 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\stackalc.cpp
+1351455337 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\stackalc.cpp
 	<iostream>
 	<sstream>
+	"include\RPN.h"
 
 1351274421 source:d:\aardvark\ics4u\unit 5\melanson_patrick_stackalc\include\stack.cpp
 	"stack.h"
@@ -27,4 +28,29 @@
 	"NODE.h"
 
 1351103763 d:\aardvark\ics4u\unit 5\melanson_patrick_stackalc\include\node.h
+
+1351470658 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\rpn.cpp
+	"RPN.h"
+	<math.h>
+
+1351470328 c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\rpn.h
+	"stack.h"
+
+1351455775 c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\stack.h
+	"NODE.h"
+
+1351455733 c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\node.h
+
+1351456109 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\stack.cpp
+	"stack.h"
+
+1351454715 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\node.cpp
+	"NODE.h"
+
+1351471894 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\main.cpp
+	<iostream>
+	<iomanip>
+	<sstream>
+	<stdlib.h>
+	"include\RPN.h"
 

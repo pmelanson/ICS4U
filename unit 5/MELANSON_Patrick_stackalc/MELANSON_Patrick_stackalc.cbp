@@ -37,7 +37,7 @@
 		<Unit filename="include\RPN.h" />
 		<Unit filename="include\stack.cpp" />
 		<Unit filename="include\stack.h" />
-		<Unit filename="stackalc.cpp" />
+		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

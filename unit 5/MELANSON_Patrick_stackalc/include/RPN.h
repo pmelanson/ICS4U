@@ -11,11 +11,14 @@ public:
 
 
 	///operators///
-
 	void			add			();
 	void			sub			();
 	void			mult		();
 	void			div			();
+	void			recip		();
+	void			sign		();
+	void			sqrt		();
+	void			exp			();
 };
 
 #endif // RPN_H
