@@ -1,5 +1,7 @@
 #include "RPN.h"
 
+#include <math.h>
+
 RPN_t::RPN_t() {
 }
 
@@ -19,4 +21,16 @@ void RPN_t::mult() {
 }
 void RPN_t::div() {
 	push (pop() / pop());
+}
+void RPN_t::recip() {
+	push (1. / pop());
+}
+void RPN_t::sign() {
+	push (-pop());
+}
+void RPN_t::sqrt() {
+	push (sqrtf(pop()));
+}
+void RPN_t::exp() {
+	push (pow(pop(), pop()));
 }

@@ -1,12 +1,11 @@
 #ifndef STACK_H
 #define STACK_H
 
-#include "NODE.h"
+#include "NODE.h"	//parent class
 
 class stack_t {
-public:
+private:
 	NODE_t*	head;
-
 public:
 	void	push	(float x);	//sets value if it won't overflow stack
 	float	pop		();			//returns value if stack is not empty, otherwise 0
