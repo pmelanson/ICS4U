@@ -2,6 +2,8 @@
 #include <iomanip>
 #include <sstream>
 #include <stdlib.h>
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include "include\RPN.h"
 using namespace std;
 
@@ -11,42 +13,46 @@ RPN_t& calc = RPN_t::getInstance();	//creates an RPN singleton
 bool getInput() {
 
 	///initialization///
-	const unsigned buttonw = 14;	//width of buttons
+	const unsigned buttonw = 8;	//width of buttons
 
 	const unsigned dispw = (buttonw + 2) * 4 + 1;	//width of display, equal to width of 4 buttons
-	char TL = '\xC9', TR = '\xBB', horz = '\xC4', vert = '\xB3', BL = '\xC8', BR = '\xBC';	//creating extended ASCII characters using their hex values
+	char TL ='\xC9', TR ='\xBB', h ='\xC4',v='\xB3', BL ='\xC8', BR ='\xBC';	//creating extended ASCII characters using their hexvalues
 	short unsigned n;
 	string buttontop, buttonbott;	//shorthand for top and bottom of buttons
 
 	///generate button strings///
 	buttontop += TL;
 	for(n=0; n<buttonw; ++n)
-		buttontop += horz;
+		buttontop += h;
 	buttontop += TR;
 	buttonbott += BL;
 	for(n=0; n<buttonw; ++n)
-		buttonbott += horz;
+		buttonbott += h;
 	buttonbott += BR;
 
 	///print out display///
 	cout << setprecision(18);	//maximum precision before I run into floating point approximations
-	cout <<TL; for(n=0; n<dispw; ++n) cout <<horz; cout <<TR << endl;
-	cout << vert << setw(dispw) << left << calc.peek() << vert << endl;
-	cout <<BL; for(n=0; n<dispw; ++n) cout <<horz; cout <<BR << endl;
+	cout <<TL; for(n=0; n<dispw; ++n) cout <<h; cout <<TR << endl;
+	cout <<v<< setw(dispw) << left << calc.peek() <<v<< endl;
+	cout <<BL; for(n=0; n<dispw; ++n) cout <<h; cout <<BR << endl;
 
 
 	cout << right;
 
 	///print out + - * / buttons///
-	cout << buttontop															<< ' ' << buttontop																<< ' ' << buttontop																<< ' ' << buttontop << endl;
-	cout << vert << setw(buttonw/2. +1) << '+' << setw(buttonw/2. +0.5) << vert	<< ' ' << vert << setw(buttonw/2. +1) << '-' << setw(buttonw/2. +0.5) << vert	<< ' ' << vert << setw(buttonw/2. +1) << '*' << setw(buttonw/2. +0.5) << vert	<< ' ' << vert << setw(buttonw/2. +1) << '/' << setw(buttonw/2. +0.5) << vert << endl;
-	cout << buttonbott															<< ' ' << buttonbott															<< ' ' << buttonbott															<< ' ' << buttonbott << endl;
+	cout << buttontop													<<' '<< buttontop													<<' '<< buttontop													<<' '<< buttontop << endl;
+	cout <<v<< setw(buttonw/2. +1) <<'+'<< setw(buttonw/2. +0.5) <<v	<<' '<<v<< setw(buttonw/2. +1) <<'-'<< setw(buttonw/2. +0.5) <<v	<<' '<<v<< setw(buttonw/2. +1) <<'*'<< setw(buttonw/2. +0.5) <<v	<<' '<<v<< setw(buttonw/2. +1) <<'/'<< setw(buttonw/2. +0.5) <<v<< endl;
+	cout << buttonbott													<<' '<< buttonbott															<<' '<< buttonbott											<<' '<< buttonbott << endl;
 
 	///print out recip sign sqrt exp buttons///
-	cout << buttontop																<< ' ' << buttontop																	<< ' ' << buttontop																	<< ' ' << buttontop << endl;
-	cout << vert << setw(buttonw/2. +3) << "recip" << setw(buttonw/2. -1.5) << vert	<< ' ' << vert << setw(buttonw/2. +2.5) << "sign" << setw(buttonw/2. -1.) << vert	<< ' ' << vert << setw(buttonw/2. +2.5) << "sqrt" << setw(buttonw/2. -1.) << vert	<< ' ' << vert << setw(buttonw/2. +1.5) << "x^y" << setw(buttonw/2.) << vert << endl;
-	cout << buttonbott																<< ' ' << buttonbott																<< ' ' << buttonbott																<< ' ' << buttonbott << endl;
+	cout << buttontop														<<' '<< buttontop														<<' '<< buttontop														<<' '<< buttontop << endl;
+	cout <<v<< setw(buttonw/2. +3) << "recip" << setw(buttonw/2. -1.5) <<v	<<' '<<v<< setw(buttonw/2. +2.5) << "sign" << setw(buttonw/2. -1.) <<v	<<' '<<v<< setw(buttonw/2. +2.5) << "sqrt" << setw(buttonw/2. -1.) <<v	<<' '<<v<< setw(buttonw/2. +1.5) << "x^y" << setw(buttonw/2.) <<v<< endl;
+	cout << buttonbott														<<' '<< buttonbott														<<' '<< buttonbott														<<' '<< buttonbott << endl;
 
+	///print out trig functions///
+	cout << buttontop														<<' '<< buttontop														<<' '<< buttontop														<<' '<< buttontop << endl;
+	cout <<v<< setw(buttonw/2. +3) << "sin" << setw(buttonw/2. -1.5) <<v	<<' '<<v<< setw(buttonw/2. +2.5) << "cos" << setw(buttonw/2. -1.) <<v	<<' '<<v<< setw(buttonw/2. +2.5) << "tan" << setw(buttonw/2. -1.) <<v	<<' '<<v<< setw(buttonw/2. +1.5) << "pi" << setw(buttonw/2.) <<v<< endl;
+	cout << buttonbott														<<' '<< buttonbott														<<' '<< buttonbott														<<' '<< buttonbott << endl;
 
 	///get input///
 	cout << "\n> ";
@@ -81,6 +87,14 @@ bool getInput() {
 			calc.sqrt();
 		else if(arg == "$x^y")
 			calc.exp();
+		else if(arg == "$sin")
+			calc.sine();
+		else if(arg == "$cos")
+			calc.cosine();
+		else if(arg == "$tan")
+			calc.tangent();
+		else if(arg == "$pi")
+			calc.push(M_PI);
 		else
 			cout << "Bad argument";
 

@@ -19,6 +19,9 @@ public:
 	void			sign		();
 	void			sqrt		();
 	void			exp			();
+	void			sine		();
+	void			cosine		();
+	void			tangent		();
 };
 
 #endif // RPN_H

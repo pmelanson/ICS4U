@@ -1,5 +1,4 @@
 #include "RPN.h"
-
 #include <math.h>
 
 RPN_t::RPN_t() {
@@ -33,4 +32,13 @@ void RPN_t::sqrt() {
 }
 void RPN_t::exp() {
 	push (pow(pop(), pop()));
+}
+void RPN_t::sine() {
+	push (sin(pop()));
+}
+void RPN_t::cosine() {
+	push (cos(pop()));
+}
+void RPN_t::tangent() {
+	push (tan(pop()));
 }
