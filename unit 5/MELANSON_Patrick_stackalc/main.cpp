@@ -9,19 +9,14 @@ RPN_t& calc = RPN_t::getInstance();	//creates an RPN singleton
 
 
 bool getInput() {
-//
-//	cout << "[#]\tadd number to stack\n";
-//	cout << "[q]\tQuit\n";
-//	cout << "[+]\tAdd top two numbers\n";
-//	cout << "[-]\tsubtract top two numbers\n";
-//	cout << "[*]\tmultiply top two numbers\n";
-//	cout << "[/]\tdivide top two numbers\n";
 
+	///initialization///
 	char TL = '\xC9', TR = '\xBB', horz = '\xC4', vert = '\xB3', BL = '\xC8', BR = '\xBC';	//creating extended ASCII characters using their hex values
 	short unsigned n;
-	const unsigned dispw = 27, buttonw = 14;
+	const unsigned dispw = 27, buttonw = 14;	//width of display and buttons
 	string buttontop, buttonbott;
 
+	///generate button strings///
 	buttontop += TL;
 	for(n=0; n<buttonw; ++n)
 		buttontop += horz;
@@ -32,10 +27,11 @@ bool getInput() {
 	buttonbott += BR;
 
 
-
+	///print out display///
 	cout <<TL; for(n=0; n<dispw; ++n) cout <<horz; cout <<TR << endl;
 	cout << vert << setw(dispw) << left << calc.peek() << vert << endl;
 	cout <<BL; for(n=0; n<dispw; ++n) cout <<horz; cout <<BR << endl;
+
 
 	cout << right;
 
@@ -50,12 +46,13 @@ bool getInput() {
 	cout << buttonbott																<< '\t' << buttonbott																<< '\t' << buttonbott																<< '\t' << buttonbott << endl;
 
 
-
+	///get input///
 	cout << "\n> ";
 	string buffer;
 	cin >> buffer;
 	cout << "\n";
 
+	///parse input///
 	string arg;	//argument
 	istringstream input(buffer);
 	float num;
