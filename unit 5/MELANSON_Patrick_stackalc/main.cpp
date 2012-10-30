@@ -19,7 +19,7 @@ bool getInput() {
 
 	char TL = '\xC9', TR = '\xBB', horz = '\xC4', vert = '\xB3', BL = '\xC8', BR = '\xBC';	//creating extended ASCII characters using their hex values
 	short unsigned n;
-	const unsigned dispw = 27, buttonw = 14;
+	const unsigned dispw = 27, buttonw = 8;
 	string buttontop, buttonbott;
 
 	buttontop += TL;
