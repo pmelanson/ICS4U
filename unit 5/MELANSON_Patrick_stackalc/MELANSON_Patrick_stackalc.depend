@@ -29,25 +29,26 @@
 
 1351528185 d:\aardvark\ics4u\unit 5\melanson_patrick_stackalc\include\node.h
 
-1351470658 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\rpn.cpp
+1351562969 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\rpn.cpp
 	"RPN.h"
 	<math.h>
 
-1351470328 c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\rpn.h
+1351562999 c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\rpn.h
 	"stack.h"
 
-1351455775 c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\stack.h
+1351563497 c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\stack.h
 	"NODE.h"
 
-1351455733 c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\node.h
+1351563488 c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\node.h
 
-1351456109 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\stack.cpp
+1351562736 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\stack.cpp
 	"stack.h"
 
-1351454715 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\node.cpp
+1351562730 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\node.cpp
 	"NODE.h"
+	<iostream>
 
-1351471894 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\main.cpp
+1351562907 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\main.cpp
 	<iostream>
 	<iomanip>
 	<sstream>

@@ -3,13 +3,16 @@
 NODE_t::NODE_t() {
 
 	data = 0;
-	nextNode = 0;	//is really NULL, but I'd have to include another library for that
+	nextNode = 0;
 }
 
-NODE_t::NODE_t (float x) {
+NODE_t::NODE_t (long double x) {
 
 	data = x;
-	nextNode = 0;	//is really NULL, but I'd have to include another library for that
+	nextNode = 0;
+}
+
+NODE_t::~NODE_t () {
 }
 
 NODE_t* NODE_t::next() {

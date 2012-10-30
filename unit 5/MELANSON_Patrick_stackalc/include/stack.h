@@ -5,13 +5,14 @@
 
 class stack_t {
 private:
-	NODE_t*	head;
+	NODE_t*		head;
+	NODE_t*		tail;
 public:
-	void	push	(float x);	//sets value if it won't overflow stack
-	float	pop		();			//returns value if stack is not empty, otherwise 0
-	float	peek	();			//returns value if stack is not empty, otherwise 0, does not remove from stack
+	void		push	(long double x);	//sets value if it won't overflow stack
+	long double	pop		();					//returns value if stack is not empty, otherwise 0
+	long double	peek	();					//returns value if stack is not empty, otherwise 0, does not remove from stack
 
-	stack_t	();			//initializes top to -1
+				stack_t	();					//initializes head and tail to NULL
 };
 
 #endif // STACK_H
