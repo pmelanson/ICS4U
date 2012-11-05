@@ -1,10 +1,7 @@
-#include <iostream>
-#include <iomanip>
-#include <sstream>
-#include <stdlib.h>
-#define _USE_MATH_DEFINES
-#include <math.h>
-#include "include\RPN.h"
+#include <iostream>			//for input/output
+#include <iomanip>			//for output formatting
+#include <sstream>			//for input parsing
+#include "include\RPN.h"	//for my RPN
 using namespace std;
 
 RPN_t& calc = RPN_t::getInstance();	//creates an RPN singleton
@@ -13,11 +10,11 @@ RPN_t& calc = RPN_t::getInstance();	//creates an RPN singleton
 bool getInput() {
 
 	///initialization///
-	const unsigned buttonw = 8;	//width of buttons
+	const unsigned buttonw = 7;	//width of buttons, do not set too low
 
 	const unsigned dispw = (buttonw + 2) * 4 + 1;	//width of display, equal to width of 4 buttons
 	char TL ='\xC9', TR ='\xBB', h ='\xC4',v='\xB3', BL ='\xC8', BR ='\xBC';	//creating extended ASCII characters using their hexvalues
-	short unsigned n;
+	short unsigned n;	//counter
 	string buttontop, buttonbott;	//shorthand for top and bottom of buttons
 
 	///generate button strings///
@@ -25,16 +22,24 @@ bool getInput() {
 	for(n=0; n<buttonw; ++n)
 		buttontop += h;
 	buttontop += TR;
+
 	buttonbott += BL;
 	for(n=0; n<buttonw; ++n)
 		buttonbott += h;
 	buttonbott += BR;
 
 	///print out display///
-	cout << setprecision(18);	//maximum precision before I run into floating point approximations
-	cout <<TL; for(n=0; n<dispw; ++n) cout <<h; cout <<TR << endl;
+	(dispw -2) > 15 ? cout<<setprecision(15) : cout<<setprecision(dispw -2);	//maximum precision before I run into floating point garbage
+
+	cout <<TL;
+	for(n=0; n<dispw; ++n) cout <<h;
+	cout <<TR << endl;
+
 	cout <<v<< setw(dispw) << left << calc.peek() <<v<< endl;
-	cout <<BL; for(n=0; n<dispw; ++n) cout <<h; cout <<BR << endl;
+
+	cout <<BL;
+	for(n=0; n<dispw; ++n) cout <<h;
+	cout <<BR << endl;
 
 
 	cout << right;
@@ -46,13 +51,19 @@ bool getInput() {
 
 	///print out recip sign sqrt exp buttons///
 	cout << buttontop														<<' '<< buttontop														<<' '<< buttontop														<<' '<< buttontop << endl;
-	cout <<v<< setw(buttonw/2. +3) << "recip" << setw(buttonw/2. -1.5) <<v	<<' '<<v<< setw(buttonw/2. +2.5) << "sign" << setw(buttonw/2. -1.) <<v	<<' '<<v<< setw(buttonw/2. +2.5) << "sqrt" << setw(buttonw/2. -1.) <<v	<<' '<<v<< setw(buttonw/2. +1.5) << "x^y" << setw(buttonw/2.) <<v<< endl;
+	cout <<v<< setw(buttonw/2. +3) << "recip" << setw(buttonw/2. -1.5) <<v	<<' '<<v<< setw(buttonw/2. +2.5) << "sign" << setw(buttonw/2. -1.) <<v	<<' '<<v<< setw(buttonw/2. +2.5) << "sqrt" << setw(buttonw/2. -1.) <<v	<<' '<<v<< setw(buttonw/2. +1.5) << "log" << setw(buttonw/2.) <<v<< endl;
 	cout << buttonbott														<<' '<< buttonbott														<<' '<< buttonbott														<<' '<< buttonbott << endl;
 
 	///print out trig functions///
 	cout << buttontop														<<' '<< buttontop														<<' '<< buttontop														<<' '<< buttontop << endl;
 	cout <<v<< setw(buttonw/2. +3) << "sin" << setw(buttonw/2. -1.5) <<v	<<' '<<v<< setw(buttonw/2. +2.5) << "cos" << setw(buttonw/2. -1.) <<v	<<' '<<v<< setw(buttonw/2. +2.5) << "tan" << setw(buttonw/2. -1.) <<v	<<' '<<v<< setw(buttonw/2. +1.5) << "pi" << setw(buttonw/2.) <<v<< endl;
 	cout << buttonbott														<<' '<< buttonbott														<<' '<< buttonbott														<<' '<< buttonbott << endl;
+
+
+	///print out meta functions///
+	cout << buttontop														<<' '<< buttontop														<<' '<< TL; for (n=0; n<(buttonw +1)*2 +1; n++) cout<<h; cout<<TR<<endl;
+	cout <<v<< setw(buttonw/2. +3) << "del" << setw(buttonw/2. -1.5) <<v	<<' '<<v<< setw(buttonw/2. +2.5) << "help" << setw(buttonw/2. -1.) <<v	<<' '<<v<< setw(buttonw +2.5) << "power" << setw(buttonw +2.5) <<v<<endl;
+	cout << buttonbott														<<' '<< buttonbott														<<' '<< BL; for (n=0; n<(buttonw +1)*2 +1; n++) cout<<h; cout<<BR<<endl;
 
 	///get input///
 	cout << "\n> ";
@@ -85,8 +96,8 @@ bool getInput() {
 			calc.sign();
 		else if(arg == "$sqrt")
 			calc.sqrt();
-		else if(arg == "$x^y")
-			calc.exp();
+		else if(arg == "$log")
+			calc.logarithm();
 		else if(arg == "$sin")
 			calc.sine();
 		else if(arg == "$cos")
@@ -94,25 +105,30 @@ bool getInput() {
 		else if(arg == "$tan")
 			calc.tangent();
 		else if(arg == "$pi")
-			calc.push(M_PI);
+			calc.pi();
+		else if(arg == "$del")
+			calc.pop();
+		else if(arg == "$help" || arg == "help")
+			cout << "Precede commands with '$'. Precede numbers with nothing. Type 'q' to quit.\n";
+		else if(arg == "$power")
+			return false;
 		else
 			cout << "Bad argument";
 
 		cout << endl;
-	}
-	else if(tolower(input.peek()) == 'h') {
+	} else if(tolower(input.peek()) == 'h') {
 		cout << "Precede commands with '$'. Precede numbers with nothing. Type 'q' to quit.\n";
-	}
-	else if(tolower(input.peek()) == 'q') {
+	} else if(tolower(input.peek()) == 'q') {
 		return false;
-	}
-	else if(input >> num) {
+	} else if(input >> num) {
 		calc.push(num);
 		cout << endl;
-	}
-	else {
+	} else {
 		cout << "Invalid input. Type 'h' for help.\n";
 	}
+
+	cin.clear();
+
 
 	return true;
 }

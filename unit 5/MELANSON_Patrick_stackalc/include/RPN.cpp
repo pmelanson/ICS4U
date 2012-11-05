@@ -1,5 +1,8 @@
 #include "RPN.h"
+#define _USE_MATH_DEFINES	//allows use of math.h constants
 #include <math.h>
+
+const float pi = acos(-1.);
 
 RPN_t::RPN_t() {
 }
@@ -19,7 +22,11 @@ void RPN_t::mult() {
 	push (pop() * pop());
 }
 void RPN_t::div() {
-	push (pop() / pop());
+//	try {
+		push (pop() / pop());
+//
+//	}
+//	catch
 }
 void RPN_t::recip() {
 	push (1. / pop());
@@ -30,8 +37,8 @@ void RPN_t::sign() {
 void RPN_t::sqrt() {
 	push (sqrtf(pop()));
 }
-void RPN_t::exp() {
-	push (pow(pop(), pop()));
+void RPN_t::logarithm() {
+	push (log(pop()));
 }
 void RPN_t::sine() {
 	push (sin(pop()));
@@ -41,4 +48,7 @@ void RPN_t::cosine() {
 }
 void RPN_t::tangent() {
 	push (tan(pop()));
+}
+void RPN_t::pi() {
+	push (M_PI);
 }

@@ -18,10 +18,11 @@ public:
 	void			recip		();
 	void			sign		();
 	void			sqrt		();
-	void			exp			();
+	void			logarithm	();
 	void			sine		();
 	void			cosine		();
 	void			tangent		();
+	void			pi			();
 };
 
 #endif // RPN_H
