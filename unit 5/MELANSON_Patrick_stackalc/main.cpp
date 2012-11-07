@@ -59,7 +59,6 @@ bool getInput() {
 	cout <<v<< setw(buttonw/2. +3) << "sin" << setw(buttonw/2. -1.5) <<v	<<' '<<v<< setw(buttonw/2. +2.5) << "cos" << setw(buttonw/2. -1.) <<v	<<' '<<v<< setw(buttonw/2. +2.5) << "tan" << setw(buttonw/2. -1.) <<v	<<' '<<v<< setw(buttonw/2. +1.5) << "pi" << setw(buttonw/2.) <<v<< endl;
 	cout << buttonbott														<<' '<< buttonbott														<<' '<< buttonbott														<<' '<< buttonbott << endl;
 
-
 	///print out meta functions///
 	cout << buttontop														<<' '<< buttontop														<<' '<< TL; for (n=0; n<(buttonw +1)*2 +1; n++) cout<<h; cout<<TR<<endl;
 	cout <<v<< setw(buttonw/2. +3) << "del" << setw(buttonw/2. -1.5) <<v	<<' '<<v<< setw(buttonw/2. +2.5) << "help" << setw(buttonw/2. -1.) <<v	<<' '<<v<< setw(buttonw +2.5) << "power" << setw(buttonw +2.5) <<v<<endl;
@@ -78,53 +77,48 @@ bool getInput() {
 
 	system("cls");
 
-	if(input.peek() == '$') {
+	if (isdigit(input.peek()){
+		input >> num;
+		calc.push(num);
+		cout << endl;
+	} else {
 		input >> arg;
-		if(arg == "$q")
+		if(arg == "q")
 			return false;
-		else if(arg == "$+")
+		else if(arg == "+")
 			calc.add();
-		else if(arg == "$-")
+		else if(arg == "-")
 			calc.sub();
-		else if(arg == "$*")
+		else if(arg == "*")
 			calc.mult();
-		else if(arg == "$/")
+		else if(arg == "/")
 			calc.div();
-		else if(arg == "$recip")
+		else if(arg == "recip")
 			calc.recip();
-		else if(arg == "$sign")
+		else if(arg == "sign")
 			calc.sign();
-		else if(arg == "$sqrt")
+		else if(arg == "sqrt")
 			calc.sqrt();
-		else if(arg == "$log")
+		else if(arg == "log")
 			calc.logarithm();
-		else if(arg == "$sin")
+		else if(arg == "sin")
 			calc.sine();
-		else if(arg == "$cos")
+		else if(arg == "cos")
 			calc.cosine();
-		else if(arg == "$tan")
+		else if(arg == "tan")
 			calc.tangent();
-		else if(arg == "$pi")
+		else if(arg == "pi")
 			calc.pi();
-		else if(arg == "$del")
+		else if(arg == "del")
 			calc.pop();
-		else if(arg == "$help" || arg == "help")
-			cout << "Precede commands with '$'. Precede numbers with nothing. Type 'q' to quit.\n";
-		else if(arg == "$power")
+		else if(arg == "help" || arg == "help")
+			cout << "Type 'q' to quit.\n";
+		else if(arg == "power")
 			return false;
 		else
 			cout << "Bad argument";
 
 		cout << endl;
-	} else if(tolower(input.peek()) == 'h') {
-		cout << "Precede commands with '$'. Precede numbers with nothing. Type 'q' to quit.\n";
-	} else if(tolower(input.peek()) == 'q') {
-		return false;
-	} else if(input >> num) {
-		calc.push(num);
-		cout << endl;
-	} else {
-		cout << "Invalid input. Type 'h' for help.\n";
 	}
 
 	cin.clear();
@@ -136,7 +130,7 @@ bool getInput() {
 
 int main() {
 
-	cout << "Patrick Melanson - RPN calculator emulator. Precede commands with '$'. Type 'q' to quit.\n";
+	cout << "Patrick Melanson - RPN calculator emulator. Precede commands with ''. Type 'q' to quit.\n";
 
 	while(getInput());
 
