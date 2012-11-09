@@ -10,10 +10,6 @@ NODE_t::NODE_t (long double x) {
 	nextNode = 0;
 }
 
-NODE_t::~NODE_t () {
-//	delete nextNode;
-}
-
 NODE_t* NODE_t::next() {
 	return nextNode;
 }

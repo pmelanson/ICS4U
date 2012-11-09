@@ -4,8 +4,6 @@
 #include "stack.h"	//parent class
 
 class RPN_t : public stack_t {
-private:
-					RPN_t		();	//private constructor
 public:
 	static RPN_t&	getInstance	();	//returns the same address no matter how many times called
 

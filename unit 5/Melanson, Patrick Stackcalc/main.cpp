@@ -60,9 +60,13 @@ bool getInput() {
 	cout << buttonbott														<<' '<< buttonbott														<<' '<< buttonbott														<<' '<< buttonbott << endl;
 
 	///print out meta functions///
-	cout << buttontop														<<' '<< buttontop														<<' '<< TL; for (n=0; n<(buttonw +1)*2 +1; n++) cout<<h; cout<<TR<<endl;
+	cout << buttontop														<<' '<< buttontop														<<' '<< TL;
+	for (n=0; n<(buttonw +1)*2 +1; n++) cout<<h;
+	cout<<TR<<endl;
 	cout <<v<< setw(buttonw/2. +3) << "del" << setw(buttonw/2. -1.5) <<v	<<' '<<v<< setw(buttonw/2. +2.5) << "help" << setw(buttonw/2. -1.) <<v	<<' '<<v<< setw(buttonw +2.5) << "power" << setw(buttonw +2.5) <<v<<endl;
-	cout << buttonbott														<<' '<< buttonbott														<<' '<< BL; for (n=0; n<(buttonw +1)*2 +1; n++) cout<<h; cout<<BR<<endl;
+	cout << buttonbott														<<' '<< buttonbott														<<' '<< BL;
+	for (n=0; n<(buttonw +1)*2 +1; n++) cout<<h;
+	cout<<BR<<endl;
 
 	///get input///
 	cout << "\n> ";
@@ -77,11 +81,11 @@ bool getInput() {
 
 	system("cls");
 
-	if (isdigit(input.peek()){
+	if (isdigit(input.peek())) {	//if a number is detected
 		input >> num;
 		calc.push(num);
 		cout << endl;
-	} else {
+	} else {						//if an argument is detected
 		input >> arg;
 		if(arg == "q")
 			return false;
@@ -112,7 +116,7 @@ bool getInput() {
 		else if(arg == "del")
 			calc.pop();
 		else if(arg == "help" || arg == "help")
-			cout << "Type 'q' to quit.\n";
+			cout << "Patrick Melanson - RPN calculator emulator. Type 'q' to quit.";
 		else if(arg == "power")
 			return false;
 		else
@@ -121,8 +125,6 @@ bool getInput() {
 		cout << endl;
 	}
 
-	cin.clear();
-
 
 	return true;
 }
@@ -130,7 +132,7 @@ bool getInput() {
 
 int main() {
 
-	cout << "Patrick Melanson - RPN calculator emulator. Precede commands with ''. Type 'q' to quit.\n";
+	cout << "Patrick Melanson - RPN calculator emulator. Type 'q' to quit.\n";
 
 	while(getInput());
 

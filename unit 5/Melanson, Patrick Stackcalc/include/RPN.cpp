@@ -1,11 +1,6 @@
 #include "RPN.h"
 #define _USE_MATH_DEFINES	//allows use of math.h constants
-#include <math.h>
-
-const float pi = acos(-1.);
-
-RPN_t::RPN_t() {
-}
+#include <cmath>
 
 RPN_t& RPN_t::getInstance() {
 	static RPN_t instance;
@@ -22,11 +17,7 @@ void RPN_t::mult() {
 	push (pop() * pop());
 }
 void RPN_t::div() {
-//	try {
-		push (pop() / pop());
-//
-//	}
-//	catch
+	push (pop() / pop());
 }
 void RPN_t::recip() {
 	push (1. / pop());

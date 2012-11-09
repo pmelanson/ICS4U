@@ -7,7 +7,6 @@ private:
 public:
 				NODE_t		();					//construct without value
 				NODE_t		(long double x);	//construct with value
-				~NODE_t		();					//deconstructs
 
 	long double	data;							//holds data
 	NODE_t*		next		();					//returns nextNode
