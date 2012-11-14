@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <iostream>			//for input/output
 #include <iomanip>			//for output formatting
 #include <sstream>			//for input parsing
