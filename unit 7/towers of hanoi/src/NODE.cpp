@@ -1,19 +1,16 @@
-#include <hanoi/NODE.hpp>
+#include <node.hpp>
 
-NODE_c::NODE_c() {
+node_c::node_c() {
 	data = 0;
 	nextNode = 0;
 }
 
-NODE_c::NODE_c (long double x) {
-	data = x;
-	nextNode = 0;
-}
+node_c::node_c (short unsigned size_) : size (size_), nextNode (0) {}
 
-NODE_c* NODE_c::next() {
+node_c* node_c::next() {
 	return nextNode;
 }
 
-void NODE_c::link (NODE_c* node) {
+void node_c::link (node_c* node) {
 	nextNode = node;
 }
