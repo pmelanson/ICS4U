@@ -33,22 +33,21 @@
 	"RPN.h"
 	<math.h>
 
-1351562999 c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\rpn.h
+1351559399 c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\rpn.h
 	"stack.h"
 
-1351563497 c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\stack.h
+1351559897 c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\stack.h
 	"NODE.h"
 
-1351563488 c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\node.h
+1351559888 c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\node.h
 
-1351562736 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\stack.cpp
+1351559136 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\stack.cpp
 	"stack.h"
 
-1351562730 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\node.cpp
+1351559933 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\include\node.cpp
 	"NODE.h"
-	<iostream>
 
-1351562907 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\main.cpp
+1351559307 source:c:\users\melanson\ics4u\unit 5\melanson_patrick_stackalc\main.cpp
 	<iostream>
 	<iomanip>
 	<sstream>
