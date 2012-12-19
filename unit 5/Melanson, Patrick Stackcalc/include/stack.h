@@ -5,8 +5,7 @@
 
 class stack_t {
 private:
-	NODE_t*		head;
-	NODE_t*		tail;
+	NODE_t*		head;						//pointer to head of list
 public:
 	void		push	(long double x);	//sets value if it won't overflow stack
 	long double	pop		();					//returns value if stack is not empty, otherwise 0

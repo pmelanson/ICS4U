@@ -1,9 +1,6 @@
 #include "RPN.h"
-
-#include <math.h>
-
-RPN_t::RPN_t() {
-}
+#define _USE_MATH_DEFINES	//allows use of math.h constants
+#include <cmath>
 
 RPN_t& RPN_t::getInstance() {
 	static RPN_t instance;
@@ -31,6 +28,18 @@ void RPN_t::sign() {
 void RPN_t::sqrt() {
 	push (sqrtf(pop()));
 }
-void RPN_t::exp() {
-	push (pow(pop(), pop()));
+void RPN_t::logarithm() {
+	push (log(pop()));
+}
+void RPN_t::sine() {
+	push (sin(pop()));
+}
+void RPN_t::cosine() {
+	push (cos(pop()));
+}
+void RPN_t::tangent() {
+	push (tan(pop()));
+}
+void RPN_t::pi() {
+	push (M_PI);
 }
